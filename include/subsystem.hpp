@@ -1,0 +1,77 @@
+#include "lemlib/chassis/chassis.hpp"
+#include "pros/adi.hpp"
+#include "pros/ai_vision.hpp"
+#include "pros/motor_group.hpp"
+#include "pros/motors.hpp"
+#include "pros/rotation.hpp"
+
+// left motor group
+inline pros::MotorGroup left_motor_group({-1, 2, -3}, pros::MotorGears::blue);
+// right motor group
+inline pros::MotorGroup right_motor_group({4, -5, 6}, pros::MotorGears::blue);
+
+// drivetrain settings
+inline lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
+                                     &right_motor_group, // right motor group
+                                     10.71, // 10 inch track width
+                                     lemlib::Omniwheel::NEW_325, // using new 4" omnis
+                                     450, // drivetrain rpm is 360
+                                     2 // horizontal drift is 2 (for now)
+);
+
+// imu
+inline pros::Imu imu(7);
+
+// vertical tracking wheel
+inline pros::Rotation vertical_encoder(8);
+inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, 0);
+
+// odometry settings
+inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
+                                   nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
+                                   nullptr,
+                                   nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
+                                   &imu // inertial sensor
+);
+
+// lateral PID controller
+inline lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
+                                                     0, // integral gain (kI)
+                                                     3, // derivative gain (kD)
+                                                     3, // anti windup
+                                                     1, // small error range, in inches
+                                                     100, // small error range timeout, in milliseconds
+                                                     3, // large error range, in inches
+                                                     500, // large error range timeout, in milliseconds
+                                                     20 // maximum acceleration (slew)
+);
+
+// angular PID controller
+inline lemlib::ControllerSettings angular_controller(2, // proportional gain (kP)
+                                                     0, // integral gain (kI)
+                                                     10, // derivative gain (kD)
+                                                     3, // anti windup
+                                                     1, // small error range, in degrees
+                                                     100, // small error range timeout, in milliseconds
+                                                     3, // large error range, in degrees
+                                                     500, // large error range timeout, in milliseconds
+                                                     0 // maximum acceleration (slew)
+);
+
+// create the chassis
+inline lemlib::Chassis chassis(drivetrain, // drivetrain settings
+                               lateral_controller, // lateral PID settings
+                               angular_controller, // angular PID settings
+                               sensors // odometry sensors
+);
+
+inline pros::Motor intake(9);
+inline pros::MotorGroup lift({10, -11});
+inline pros::Motor bar(12);
+inline pros::Motor claw(13);
+
+inline pros::Rotation bar_rotation(14);
+
+inline pros::ADIDigitalOut claw_piston('A');
+
+inline pros::AIVision aiVision(15);
