@@ -1,6 +1,5 @@
 #include "subsystem.hpp"
 
-
 inline int level = 0; /* keeps track of lift's current level */
 
 inline bool docking = true; /* state of claw, docking (taking stacks from intake)
