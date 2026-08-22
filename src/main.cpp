@@ -27,7 +27,7 @@ void initialize() {
         while (true) {
 			lcd::print(0, "lift Level: %d", level);
 
-			if (docking == true) {
+			if (loading == true) {
 				lcd::print(1, "Bar: Dock");
 			} else {
 				lcd::print(1, "Bar: Load");
@@ -113,7 +113,7 @@ void opcontrol() {
 		// dock, load & score
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
 			if (level == 0) {
-				docking = !docking;
+				loading = !loading;
 			} else {
 				scoring = !scoring;
 			}
@@ -129,28 +129,28 @@ void opcontrol() {
 		if (scoring == false) {
 			if (manual == false) {
 				if (level == 0) {
-					lv0();
+					lift_lv0();
 				} else if (level == 1) {
-					lv1();
-					docking = false; /* this is to prevent the robot from automatically return to docking position
+					lift_lv1();
+					loading = false; /* this is to prevent the robot from automatically return to docking position
 										if the driver wish to stay at loading position */
-					load();
+					claw_score();
 				} else if (level == 2) {
-					lv2();
-					load();
+					lift_lv2();
+					claw_score();
 				} else if (level == 3) {
-					lv3();
-					load();
+					lift_lv3();
+					claw_score();
 				} else if (level == 4) {
-					lv4();
-					load();
+					lift_lv4();
+					claw_score();
 				} else if (level == 5) {
-					lv5();
-					load();
+					lift_lv5();
+					claw_score();
 				}
 			}
 		} else {
-			score();
+			score_stack();
 		}
 
 		delay(30);
