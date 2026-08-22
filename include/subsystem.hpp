@@ -73,5 +73,7 @@ inline pros::Motor claw(13);
 inline pros::Rotation bar_rotation(14);
 
 inline pros::ADIDigitalOut claw_piston('A');
+inline pros::ADIDigitalOut intake_pistion_front('B');
+inline pros::ADIDigitalOut intake_piston_back('C');
 
 inline pros::AIVision aiVision(15);
