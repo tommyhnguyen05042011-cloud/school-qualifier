@@ -20,11 +20,18 @@ inline void lift_lv3() {}
 inline void lift_lv4() {}
 inline void lift_lv5() {}
 
-/* claw's position controlling macro. docking is only available at lv 0,
-   load is on all level, raise is only used when the scoring button is pressed */
-inline void claw_load() {}
-inline void claw_score() {}
-inline void claw_raise() {}
+/* claw's position controlling macro. docking is only available at lv 0, load is on all level */
+inline void claw_load() {
+    if (loading == true) {
+        lift.move((50000- lift.get_position()) * 0.05);
+        bar.move((10000 - bar_rotation.get_position()) * 0.01);
+    }
+}
+inline void claw_score() {
+    if (loading == false) {
+        bar.move((10000 - bar_rotation.get_position()) * 0.01);
+    }
+}
 
-/* scoring command*/
+/* scoring command */
 inline void score_stack() {}
