@@ -98,7 +98,7 @@ void opcontrol() {
 		} else if (manual == false) {
 			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
 				scoring = false;
-				if (level < 6) {
+				if (level < 5) {
 					level++;
 				} else {}
 			} else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)) {
@@ -109,7 +109,7 @@ void opcontrol() {
 			}
 		}
 
-		// load, dock & score
+		// dock, load & score
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
 			if (level == 0) {
 				docking = !docking;
@@ -123,16 +123,11 @@ void opcontrol() {
 			level = 0;
 		}
 
+		// level --> mech control
 		if (scoring == false) {
 			if (manual == false) {
 				if (level == 0) {
-					if (docking == true) {
-						dock();
-						lv1();
-					} else if (docking == false) {
-						load();
-						lv0();
-					}
+					lv0();
 				} else if (level == 1) {
 					lv1();
 					docking = false;
@@ -145,10 +140,10 @@ void opcontrol() {
 					load();
 				} else if (level == 4) {
 					lv4();
-					raise();
+					load();
 				} else if (level == 5) {
 					lv5();
-					raise();
+					load();
 				}
 			}
 		} else {

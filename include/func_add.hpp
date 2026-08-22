@@ -20,8 +20,8 @@ inline void lv3() {}
 inline void lv4() {}
 inline void lv5() {}
 
-/* claw's position controlling macro. dock is only available at lv0,
-   loading is only available at lv 0-3, and raise is lv 4-5*/
+/* claw's position controlling macro. docking is only available at lv 0,
+   load is on all level, raise is only used when the scoring button is pressed */
 inline void dock() {}
 inline void load() {}
 inline void raise() {}
