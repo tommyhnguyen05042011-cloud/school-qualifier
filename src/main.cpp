@@ -82,11 +82,12 @@ void opcontrol() {
 		}
 		lastLEFTState = currentLEFTState;
 
-		//lift
+		// manual toggle
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
 			manual = !manual;
 		} else {}
 
+		// what to do if manual or not
 		if (manual == true) {
 			if (master.get_digital(E_CONTROLLER_DIGITAL_Y)) {
 				lift.move(127);
@@ -120,17 +121,19 @@ void opcontrol() {
 
 		//reseting lift
 		if (master.get_digital(E_CONTROLLER_DIGITAL_UP)) {
+			scoring = false;
 			level = 0;
 		}
 
-		// level --> mech control
+		// level --> mech control (manual is false)
 		if (scoring == false) {
 			if (manual == false) {
 				if (level == 0) {
 					lv0();
 				} else if (level == 1) {
 					lv1();
-					docking = false;
+					docking = false; /* this is to prevent the robot from automatically return to docking position
+										if the driver wish to stay at loading position */
 					load();
 				} else if (level == 2) {
 					lv2();
