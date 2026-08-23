@@ -28,7 +28,7 @@ void initialize() {
 	intake_piston_back.set_value(true);
 
 	Task([&] {
-        while (true) {
+		while (true) {
 			lcd::print(0, "lift Level: %d", level);
 
 			if (loading == true) {
@@ -44,7 +44,9 @@ void initialize() {
 			}
 
 			lcd::print(3, "Bar Rotation: %d", bar_rotation.get_position());
-    }
+
+			delay(100);
+    	}
     });
 }
 
