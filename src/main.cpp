@@ -6,6 +6,7 @@
 #include <cstdio>
 #include "main.h"
 #include "pros/llemu.hpp"
+#include "pros/rtos.hpp"
 
 using namespace pros;
 using namespace lemlib;
