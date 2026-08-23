@@ -156,8 +156,9 @@ void opcontrol() {
 					claw_score();
 				}
 			}
-		} else {
-			score_stack();
+		}
+		if (scoring == true) {
+			Task score_task(score_task);
 		}
 
 		delay(30);
