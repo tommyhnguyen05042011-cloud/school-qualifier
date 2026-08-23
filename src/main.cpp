@@ -20,8 +20,12 @@ void initialize() {
 
 	// bar rotation reset
 	bar_rotation.reset_position();
+	// lift rotation reset
+	lift.set_zero_position_all(0);
 	// piston state
 	claw_piston.set_value(true);
+	intake_pistion_front.set_value(true);
+	intake_piston_back.set_value(true);
 
 	Task([&] {
         while (true) {
