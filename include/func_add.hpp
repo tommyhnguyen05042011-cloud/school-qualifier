@@ -36,7 +36,7 @@ inline void lift_lv5() {
 inline void claw_load() {
     if (loading == true) {
         lift.move((lift.get_position()) * 0.05);
-        bar.move((10000 - bar_rotation.get_position()) * 0.01);
+        bar.move((bar_rotation.get_position()) * 0.01);
     }
 }
 inline void claw_score() {
@@ -46,4 +46,8 @@ inline void claw_score() {
 }
 
 /* scoring command */
-inline void score_stack() {}
+inline void score_stack() {
+    claw_piston.set_value(false);
+    pros::delay(200);
+    bar.move((12000 - bar_rotation.get_position()) * 0.01);
+}
