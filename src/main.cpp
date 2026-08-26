@@ -31,20 +31,21 @@ void initialize() {
 	Task([&] {
 		while (true) {
 			lcd::print(0, "lift Level: %d", level);
+			lcd::print(1, "Lift Pose: %f", lift.get_position());
 
 			if (loading == true) {
-				lcd::print(1, "Bar: Dock");
+				lcd::print(2, "Bar: Dock");
 			} else {
-				lcd::print(1, "Bar: Load");
+				lcd::print(2, "Bar: Load");
 			}
 
 			if (scoring == true) {
-				lcd::print(2, "Scoring");
+				lcd::print(3, "Scoring");
 			} else {
-				lcd::print(2, "Not Scoring");
+				lcd::print(3, "Not Scoring");
 			}
 
-			lcd::print(3, "Bar Rotation: %d", bar_rotation.get_position());
+			lcd::print(4, "Bar Rotation: %d", bar_rotation.get_position());
 
 			delay(100);
     	}
@@ -158,7 +159,7 @@ void opcontrol() {
 			}
 		}
 		if (scoring == true) {
-			Task score_task(score_task);
+			score_stack();
 		}
 
 		delay(30);
