@@ -66,8 +66,8 @@ inline lemlib::Chassis chassis(drivetrain, // drivetrain settings
 );
 
 inline pros::Motor intake(9);
-inline pros::MotorGroup lift({10, -11});
-inline pros::Motor bar(12);
+inline pros::MotorGroup lift({11, -12});
+inline pros::Motor bar(13);
 
 inline pros::Rotation bar_rotation(14);
 
