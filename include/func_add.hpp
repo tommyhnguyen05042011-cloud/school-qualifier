@@ -14,22 +14,22 @@ inline bool manual = false; /* state of control, manual or macroed.
 
 /* macro commands to move the scoring subsystem to certain heights, a.k.a levels */
 inline void lift_lv0() {
-    lift.move(lift.get_position() * 0.05);
+    lift.move(lift.get_position() * -1);
 }
 inline void lift_lv1() {
-    lift.move((50000 - lift.get_position()) * 0.05);
+    lift.move((1100 - lift.get_position()));
 }
 inline void lift_lv2() {
-    lift.move((100000 - lift.get_position()) * 0.05);
+    lift.move((2200 - lift.get_position()));
 }
 inline void lift_lv3() {
-    lift.move((150000 - lift.get_position()) * 0.05);
+    lift.move((3300 - lift.get_position()));
 }
 inline void lift_lv4() {
-    lift.move((200000 - lift.get_position()) * 0.05);
+    lift.move((4400 - lift.get_position()));
 }
 inline void lift_lv5() {
-    lift.move((250000 - lift.get_position()) * 0.05);
+    lift.move((5300 - lift.get_position()));
 }
 
 /* claw's position controlling macro. docking is only available at lv 0, load is on all level */
