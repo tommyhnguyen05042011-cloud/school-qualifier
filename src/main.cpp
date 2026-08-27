@@ -159,7 +159,7 @@ void opcontrol() {
 			}
 		}
 		if (scoring == true) {
-			score_stack();
+			Task scoring_task(score_stack);
 		}
 
 		delay(30);
