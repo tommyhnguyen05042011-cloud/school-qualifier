@@ -17,19 +17,19 @@ inline void lift_lv0() {
     lift.move(lift.get_position() * -1);
 }
 inline void lift_lv1() {
-    lift.move((1100 - lift.get_position()));
+    lift.move((880 - lift.get_position()) * 1);
 }
 inline void lift_lv2() {
-    lift.move((2200 - lift.get_position()));
+    lift.move((1760 - lift.get_position()) * 1);
 }
 inline void lift_lv3() {
-    lift.move((3300 - lift.get_position()));
+    lift.move((2640 - lift.get_position()) * 1);
 }
 inline void lift_lv4() {
-    lift.move((4400 - lift.get_position()));
+    lift.move((3520 - lift.get_position()) * 1);
 }
 inline void lift_lv5() {
-    lift.move((5300 - lift.get_position()));
+    lift.move((4400 - lift.get_position()) * 1);
 }
 
 /* claw's position controlling macro. docking is only available at lv 0, load is on all level */
