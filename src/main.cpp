@@ -62,8 +62,14 @@ Controller master(E_CONTROLLER_MASTER);
 
 void opcontrol() {
 	bool clawState = true;
-	bool lastLEFTState;
-	bool currentLEFTState;
+	bool intake1State = true;
+	bool intake2State = true;
+	bool currentOpticalState = false;
+	bool lastOpticalState = false;
+	bool lastR1State;
+	bool lastAState;
+	bool currentAState;
+	bool currentR1State;
 	
 	while (true) {
 		// get left y and right x positions
@@ -82,13 +88,23 @@ void opcontrol() {
 			intake.move(0);
 		}
 
+		// intake pneumatics control
+		currentAState = master.get_digital(E_CONTROLLER_DIGITAL_A);
+		if (currentAState && !lastAState) {
+			intake1State = !intake1State;
+			intake2State = !intake2State;
+			intake_pistion_front.set_value(intake1State);
+			intake_piston_back.set_value(intake2State);
+		}
+		lastAState = currentAState;
+
 		// toggle claw
-		currentLEFTState = master.get_digital(E_CONTROLLER_DIGITAL_LEFT);
-		if (currentLEFTState && !lastLEFTState) {
+		currentR1State = master.get_digital(E_CONTROLLER_DIGITAL_R1);
+		if (currentR1State && !lastR1State) {
 			clawState = !clawState;
 			claw_piston.set_value(clawState);
 		}
-		lastLEFTState = currentLEFTState;
+		lastR1State = currentR1State;
 
 		// manual toggle
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
