@@ -65,14 +65,14 @@ inline lemlib::Chassis chassis(drivetrain, // drivetrain settings
                                sensors // odometry sensors
 );
 
-inline pros::Motor intake(9);
+inline pros::Motor intake(13);
 inline pros::MotorGroup lift({11, -12});
-inline pros::Motor bar(13);
+inline pros::Motor bar(16);
 
 inline pros::Rotation bar_rotation(14);
 
-inline pros::ADIDigitalOut claw_piston('A');
-inline pros::ADIDigitalOut intake_pistion_front('B');
-inline pros::ADIDigitalOut intake_piston_back('C');
+inline pros::ADIDigitalOut claw_piston('E');
+inline pros::ADIDigitalOut intake_pistion_front('A');
+inline pros::ADIDigitalOut intake_piston_back('B');
 
 inline pros::AIVision aiVision(15);
