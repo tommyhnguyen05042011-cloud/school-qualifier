@@ -74,4 +74,5 @@ inline void score_stack() {
     claw_piston.set_value(false);
     pros::delay(200);
     bar.move((10000 - bar_rotation.get_position()) * 0.01);
+    scoring = false;
 }
