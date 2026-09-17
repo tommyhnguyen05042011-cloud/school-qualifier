@@ -19,8 +19,8 @@ void initialize() {
 	lift.set_zero_position_all(0);
 	// piston state
 	claw_piston.set_value(true);
-	intake_pistion_front.set_value(true);
-	intake_piston_back.set_value(true);
+	intake_pistion_front.set_value(false);
+	intake_piston_back.set_value(false);
 
 	Task([&] {
 		while (true) {
@@ -59,8 +59,8 @@ Controller master(E_CONTROLLER_MASTER);
 
 void opcontrol() {
 	bool clawState = false;
-	bool intake1State = true;
-	bool intake2State = true;
+	bool intake1State = false;
+	bool intake2State = false;
 	bool currentOpticalState = false;
 	bool lastOpticalState = false;
 	
@@ -142,27 +142,7 @@ void opcontrol() {
 		// level --> mech control (manual is false)
 		if (scoring == false) {
 			if (manual == false) {
-				if (level == -1) {
-
-				} else if (level == 0) {
-					lift_lv0();
-					claw_load();
-				} else if (level == 1) {
-					lift_lv1();
-					claw_score();
-				} else if (level == 2) {
-					lift_lv2();
-					claw_score();
-				} else if (level == 3) {
-					lift_lv3();
-					claw_score();
-				} else if (level == 4) {
-					lift_lv4();
-					claw_score();
-				} else if (level == 5) {
-					lift_lv5();
-					claw_score();
-				}
+				Task macro_control_task(macro_control);
 			}
 		}
 
