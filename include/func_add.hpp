@@ -48,9 +48,9 @@ inline void macro_control() {
     if (level == -1) {
         lift_lvsub0();
     } else if (level == 0) {
-        lift_lv0();
-        pros::delay(200);
         claw_load();
+        pros::delay(200);
+        lift_lv0();        
     } else if (level == 1) {
         lift_lv1();
         claw_score();
