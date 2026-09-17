@@ -1,30 +1,29 @@
 #include "lemlib/chassis/chassis.hpp"
 #include "pros/adi.hpp"
-#include "pros/ai_vision.hpp"
 #include "pros/motor_group.hpp"
 #include "pros/motors.hpp"
 #include "pros/rotation.hpp"
 
 // left motor group
-inline pros::MotorGroup left_motor_group({-1, 2, -3}, pros::MotorGears::blue);
+inline pros::MotorGroup left_motor_group({-2, -3, -4}, pros::MotorGears::blue);
 // right motor group
-inline pros::MotorGroup right_motor_group({4, -5, 6}, pros::MotorGears::blue);
+inline pros::MotorGroup right_motor_group({5, 6, 7}, pros::MotorGears::blue);
 
 // drivetrain settings
 inline lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
                                      &right_motor_group, // right motor group
                                      10.71, // 10 inch track width
-                                     lemlib::Omniwheel::NEW_325, // using new 4" omnis
-                                     450, // drivetrain rpm is 360
+                                     lemlib::Omniwheel::NEW_325, // using new 3.25" omnis
+                                     450, // drivetrain rpm is 450
                                      2 // horizontal drift is 2 (for now)
 );
 
 // imu
-inline pros::Imu imu(7);
+inline pros::Imu imu(14);
 
 // vertical tracking wheel
-inline pros::Rotation vertical_encoder(8);
-inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, 0);
+inline pros::Rotation vertical_encoder(1);
+inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, 0.39);
 
 // odometry settings
 inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
@@ -69,10 +68,8 @@ inline pros::Motor intake(13);
 inline pros::MotorGroup lift({11, -12});
 inline pros::Motor bar(16);
 
-inline pros::Rotation bar_rotation(14);
+inline pros::Rotation bar_rotation(15);
 
-inline pros::ADIDigitalOut claw_piston('E');
+inline pros::ADIDigitalOut claw_piston('H');
 inline pros::ADIDigitalOut intake_pistion_front('A');
 inline pros::ADIDigitalOut intake_piston_back('B');
-
-inline pros::AIVision aiVision(15);
