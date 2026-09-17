@@ -1,5 +1,4 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
-#include "pros/ai_vision.hpp"
 #include "pros/misc.h"
 #include "func_add.hpp"
 #include <csignal>
@@ -14,13 +13,8 @@ using namespace lemlib;
 void initialize() {
 	lcd::initialize();
 
-	// ai vision initialize
-	aiVision.reset();
-    aiVision.enable_detection_types(AivisionModeType::tags);
-    aiVision.set_tag_family(AivisionTagFamily::tag_21H7, true);
-
 	// bar rotation reset
-	bar_rotation.reset_position();
+	bar_rotation.set_position(0);
 	// lift rotation reset
 	lift.set_zero_position_all(0);
 	// piston state
@@ -47,6 +41,9 @@ void initialize() {
 
 			lcd::print(4, "Bar Rotation: %d", bar_rotation.get_position());
 
+			lcd::print(5, "Left Drive Temp: %f", left_motor_group.get_temperature());
+			lcd::print(6, "Right Drive Temp: %f", right_motor_group.get_temperature());
+
 			delay(100);
     	}
     });
@@ -61,15 +58,11 @@ void autonomous() {}
 Controller master(E_CONTROLLER_MASTER);
 
 void opcontrol() {
-	bool clawState = true;
+	bool clawState = false;
 	bool intake1State = true;
 	bool intake2State = true;
 	bool currentOpticalState = false;
 	bool lastOpticalState = false;
-	bool lastR1State;
-	bool lastAState;
-	bool currentAState;
-	bool currentR1State;
 	
 	while (true) {
 		// get left y and right x positions
@@ -89,27 +82,23 @@ void opcontrol() {
 		}
 
 		// intake pneumatics control
-		currentAState = master.get_digital(E_CONTROLLER_DIGITAL_A);
-		if (currentAState && !lastAState) {
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_A)) {
 			intake1State = !intake1State;
 			intake2State = !intake2State;
-			intake_pistion_front.set_value(intake1State);
-			intake_piston_back.set_value(intake2State);
 		}
-		lastAState = currentAState;
+		intake_pistion_front.set_value(intake1State);
+		intake_piston_back.set_value(intake2State);
 
 		// toggle claw
-		currentR1State = master.get_digital(E_CONTROLLER_DIGITAL_R1);
-		if (currentR1State && !lastR1State) {
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
 			clawState = !clawState;
-			claw_piston.set_value(clawState);
 		}
-		lastR1State = currentR1State;
+		claw_piston.set_value(clawState);
 
 		// manual toggle
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
 			manual = !manual;
-		} else {}
+		}
 
 		// what to do if manual or not
 		if (manual == true) {
@@ -125,21 +114,22 @@ void opcontrol() {
 				scoring = false;
 				if (level < 5) {
 					level++;
-				} else {}
+				}
 			} else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)) {
 				scoring = false;
-				if (level > 0) {
+				if (level > -1) {
 					level--;
 				}
 			}
 		}
 
-		// dock, load & score
+		// load & score
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
 			if (level == 0) {
-				loading = !loading;
+				clawState = false;
+				claw_piston.set_value(clawState);
 			} else {
-				scoring = !scoring;
+				Task scoring_task(score_stack);
 			}
 		}
 
@@ -152,12 +142,13 @@ void opcontrol() {
 		// level --> mech control (manual is false)
 		if (scoring == false) {
 			if (manual == false) {
-				if (level == 0) {
+				if (level == -1) {
+
+				} else if (level == 0) {
 					lift_lv0();
+					claw_load();
 				} else if (level == 1) {
 					lift_lv1();
-					loading = false; /* this is to prevent the robot from automatically return to docking position
-										if the driver wish to stay at loading position */
 					claw_score();
 				} else if (level == 2) {
 					lift_lv2();
@@ -174,10 +165,7 @@ void opcontrol() {
 				}
 			}
 		}
-		if (scoring == true) {
-			Task scoring_task(score_stack);
-		}
 
-		delay(30);
+		delay(20);
 	}
 }
