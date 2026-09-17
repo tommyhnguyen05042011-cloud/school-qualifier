@@ -57,13 +57,45 @@ void autonomous() {}
 
 Controller master(E_CONTROLLER_MASTER);
 
-void opcontrol() {
-	bool clawState = false;
-	bool intake1State = false;
-	bool intake2State = false;
-	bool currentOpticalState = false;
-	bool lastOpticalState = false;
-	
+bool clawState = false;
+bool intake1State = false;
+bool intake2State = false;
+bool currentOpticalState = false;
+bool lastOpticalState = false;
+
+void macro_control() {
+    if (level == -1) {
+        lift.move(300 - lift.get_position() * 1);
+        claw_load();
+        pros::delay(100);
+        lift.move(300 - lift.get_position() * -1);
+    } else if (level == 0) {
+		if (clawState == false) {
+			claw_load();
+			delay(100);
+		} else {
+			claw_score();
+		}
+        lift.move(lift.get_position() * -1);
+    } else if (level == 1) {
+        lift.move((1200 - lift.get_position()) * 1);
+        claw_score();
+    } else if (level == 2) {
+        lift.move((2000 - lift.get_position()) * 1);;
+        claw_score();
+    } else if (level == 3) {
+        lift.move((2640 - lift.get_position()) * 1);
+        claw_score();
+    } else if (level == 4) {
+        lift.move((3520 - lift.get_position()) * 1);
+        claw_score();
+    } else if (level == 5) {
+        lift.move((4400 - lift.get_position()) * 1);
+        claw_score();
+    }
+}
+
+void opcontrol() {	
 	while (true) {
 		// get left y and right x positions
         int leftY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
