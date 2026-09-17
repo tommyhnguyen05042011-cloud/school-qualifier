@@ -13,6 +13,9 @@ inline bool manual = false; /* state of control, manual or macroed.
                                to move the lift to whatever degree of movement he needs */
 
 /* macro commands to move the scoring subsystem to certain heights, a.k.a levels */
+inline void lift_lvsub0() {
+    lift.move(300 - lift.get_position() * -1);
+}
 inline void lift_lv0() {
     lift.move(lift.get_position() * -1);
 }
@@ -20,7 +23,7 @@ inline void lift_lv1() {
     lift.move((880 - lift.get_position()) * 1);
 }
 inline void lift_lv2() {
-    lift.move((1760 - lift.get_position()) * 1);
+    lift.move((2000 - lift.get_position()) * 1);
 }
 inline void lift_lv3() {
     lift.move((2640 - lift.get_position()) * 1);
@@ -32,22 +35,17 @@ inline void lift_lv5() {
     lift.move((4400 - lift.get_position()) * 1);
 }
 
-/* claw's position controlling macro. docking is only available at lv 0, load is on all level */
+/* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    if (loading == true) {
-        lift.move((lift.get_position()) * 0.05);
-        bar.move((bar_rotation.get_position()) * 0.01);
-    }
+    bar.move((bar_rotation.get_position()) * -0.05);
 }
 inline void claw_score() {
-    if (loading == false) {
-        bar.move((10000 - bar_rotation.get_position()) * 0.01);
-    }
+    bar.move((8500 - bar_rotation.get_position()) * 0.05);
 }
 
 /* scoring command */
 inline void score_stack() {
     claw_piston.set_value(false);
     pros::delay(200);
-    bar.move((12000 - bar_rotation.get_position()) * 0.01);
+    bar.move((10000 - bar_rotation.get_position()) * 0.01);
 }
