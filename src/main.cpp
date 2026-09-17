@@ -129,7 +129,7 @@ void opcontrol() {
 				clawState = false;
 				claw_piston.set_value(clawState);
 			} else {
-				Task scoring_task(score_stack);
+				scoring = !scoring;
 			}
 		}
 
@@ -144,6 +144,8 @@ void opcontrol() {
 			if (manual == false) {
 				Task macro_control_task(macro_control);
 			}
+		} else {
+			Task scoring_task(score_stack);
 		}
 
 		delay(20);
