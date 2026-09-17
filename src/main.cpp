@@ -65,10 +65,9 @@ bool lastOpticalState = false;
 
 void macro_control() {
     if (level == -1) {
-        lift.move(300 - lift.get_position() * 1);
-        claw_load();
-        pros::delay(100);
-        lift.move(300 - lift.get_position() * -1);
+        claw_score();
+        pros::delay(200);
+        lift.move(300 + lift.get_position() * -1);
     } else if (level == 0) {
 		if (clawState == false) {
 			claw_load();
@@ -76,7 +75,7 @@ void macro_control() {
 		} else {
 			claw_score();
 		}
-        lift.move(lift.get_position() * -1);
+        lift.move(200 - lift.get_position() * -0.4);
     } else if (level == 1) {
         lift.move((1200 - lift.get_position()) * 1);
         claw_score();
