@@ -20,7 +20,7 @@ inline void lift_lv0() {
     lift.move(lift.get_position() * -1);
 }
 inline void lift_lv1() {
-    lift.move((880 - lift.get_position()) * 1);
+    lift.move((1200 - lift.get_position()) * 1);
 }
 inline void lift_lv2() {
     lift.move((2000 - lift.get_position()) * 1);
@@ -37,10 +37,36 @@ inline void lift_lv5() {
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    bar.move((bar_rotation.get_position()) * -0.05);
+    bar.move((bar_rotation.get_position()) * -0.035);
 }
 inline void claw_score() {
-    bar.move((8500 - bar_rotation.get_position()) * 0.05);
+    bar.move((8600 - bar_rotation.get_position()) * 0.035);
+}
+
+// lift macro level control (run in a task)
+inline void macro_control() {
+    if (level == -1) {
+        lift_lvsub0();
+    } else if (level == 0) {
+        lift_lv0();
+        pros::delay(200);
+        claw_load();
+    } else if (level == 1) {
+        lift_lv1();
+        claw_score();
+    } else if (level == 2) {
+        lift_lv2();
+        claw_score();
+    } else if (level == 3) {
+        lift_lv3();
+        claw_score();
+    } else if (level == 4) {
+        lift_lv4();
+        claw_score();
+    } else if (level == 5) {
+        lift_lv5();
+        claw_score();
+    }
 }
 
 /* scoring command */
