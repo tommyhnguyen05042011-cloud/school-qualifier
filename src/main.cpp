@@ -14,9 +14,9 @@ void initialize() {
 	lcd::initialize();
 
 	// bar rotation reset
-	bar_rotation.set_position(0);
+	bar_rotation.reset_position();
 	// lift rotation reset
-	lift.set_zero_position_all(0);
+	lift.tare_position_all();
 	// piston state
 	claw_piston.set_value(true);
 	intake_pistion_front.set_value(false);
@@ -25,12 +25,12 @@ void initialize() {
 	Task([&] {
 		while (true) {
 			lcd::print(0, "lift Level: %d", level);
-			lcd::print(1, "Lift Rotation: %d", lift.get_position());
+			lcd::print(1, "Lift Rotation: %f", lift.get_position());
 
 			if (loading == true) {
-				lcd::print(2, "Bar: Dock");
-			} else {
 				lcd::print(2, "Bar: Load");
+			} else {
+				lcd::print(2, "Bar: Score");
 			}
 
 			if (scoring == true) {
