@@ -20,7 +20,7 @@ inline bool lastOpticalState = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    bar.move((bar_rotation.get_position()) * -0.04);
+    bar.move((100 + bar_rotation.get_position()) * -0.04);
 }
 inline void claw_score() {
     bar.move((8700 - bar_rotation.get_position()) * 0.05);
