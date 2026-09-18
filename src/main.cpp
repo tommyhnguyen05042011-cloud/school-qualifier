@@ -90,7 +90,7 @@ void opcontrol() {
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
 			clawState = !clawState;
 		}
-		if (!scoring) {
+		if (!scoring && level > 0) {
 			claw_piston.set_value(clawState);
 		}
 
