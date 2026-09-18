@@ -25,7 +25,7 @@ void initialize() {
 	Task([&] {
 		while (true) {
 			lcd::print(0, "lift Level: %d", level);
-			lcd::print(1, "Lift Pose: %f", lift.get_position());
+			lcd::print(1, "Lift Rotation: %d", lift.get_position());
 
 			if (loading == true) {
 				lcd::print(2, "Bar: Dock");
@@ -41,8 +41,8 @@ void initialize() {
 
 			lcd::print(4, "Bar Rotation: %d", bar_rotation.get_position());
 
-			lcd::print(5, "Left Drive Temp: %f", left_motor_group.get_temperature());
-			lcd::print(6, "Right Drive Temp: %f", right_motor_group.get_temperature());
+			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
+			lcd::print(6, "Right Drive Temp: %d", right_motor_group.get_temperature());
 
 			delay(100);
     	}
