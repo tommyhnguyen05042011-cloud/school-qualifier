@@ -1,6 +1,8 @@
 #include "subsystem.hpp"
 
 inline int level = 0; /* keeps track of lift's current level */
+inline bool hold_score = false; /* determine whether Claw should stay
+                                   at score or at load*/
 
 inline bool loading = true; /* state of claw, loading (taking stacks from intake, only on lv0)
                                or scoring (parallel to ground to score)*/
@@ -12,15 +14,15 @@ inline bool manual = false; /* state of control, manual or macroed.
                                when manual, driver will be able
                                to move the lift to whatever degree of movement he needs */
 
-inline bool clawState = false;
-inline bool intake1State = false;
-inline bool intake2State = false;
-inline bool currentOpticalState = false;
-inline bool lastOpticalState = false;
+inline bool clawClose = false;
+inline bool intake1Retract = false;
+inline bool intake2Retract = false;
+inline bool currentOpticalDetect = false;
+inline bool lastOpticalDetect = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    bar.move((100 + bar_rotation.get_position()) * -0.04);
+    bar.move((-200 - bar_rotation.get_position()) * 0.04);
 }
 inline void claw_score() {
     bar.move((8700 - bar_rotation.get_position()) * 0.05);
@@ -32,15 +34,17 @@ inline void macro_control() {
             if (level == -1) {
                 claw_score();
                 pros::delay(200);
-                lift.move(300 + lift.get_position() * -1);
+                lift.move(-300 - lift.get_position() * 1);
             } else if (level == 0) {
-                if (clawState == false) {
-                    claw_load();
-                    lift.move((-lift.get_position()) * 0.5);
-                } else {
-                    claw_score();
-                    lift.move((-lift.get_position()) * 0.5);
+                if (!clawClose) {
+                    hold_score = false;
                 }
+                if (hold_score && clawClose) {
+                    claw_score();
+                } else {
+                    claw_load();
+                }
+                lift.move((-lift.get_position()) * 0.5);
             } else if (level == 1) {
                 lift.move((1200 - lift.get_position()) * 1);
                 claw_score();
