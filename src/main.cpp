@@ -75,7 +75,7 @@ void macro_control() {
 		} else {
 			claw_score();
 		}
-        lift.move(200 - lift.get_position() * -0.4);
+        lift.move((lift.get_position()) * 0.3);
     } else if (level == 1) {
         lift.move((1200 - lift.get_position()) * 1);
         claw_score();
