@@ -124,7 +124,9 @@ void opcontrol() {
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
 			clawState = !clawState;
 		}
-		claw_piston.set_value(clawState);
+		if (!scoring) {
+			claw_piston.set_value(clawState);
+		}
 
 		// manual toggle
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
@@ -132,7 +134,7 @@ void opcontrol() {
 		}
 
 		// what to do if manual or not
-		if (manual == true) {
+		if (manual) {
 			if (master.get_digital(E_CONTROLLER_DIGITAL_Y)) {
 				lift.move(127);
 			} else if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)) {
@@ -140,7 +142,7 @@ void opcontrol() {
 			} else {
 				lift.move(0);
 			}
-		} else if (manual == false) {
+		} else {
 			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
 				scoring = false;
 				if (level < 5) {
@@ -161,6 +163,9 @@ void opcontrol() {
 				claw_piston.set_value(clawState);
 			} else {
 				scoring = !scoring;
+				if (scoring) {
+					Task scoring_task(score_stack); // only summon scoring task ONCE if scoring is true
+				}
 			}
 		}
 
@@ -170,13 +175,9 @@ void opcontrol() {
 			level = 0;
 		}
 
-		// level --> mech control (manual is false)
-		if (scoring == false) {
-			if (manual == false) {
+		// macro only happens if not scoring and not manual
+		if (!scoring && !manual) {
 				Task macro_control_task(macro_control);
-			}
-		} else {
-			Task scoring_task(score_stack);
 		}
 
 		delay(20);
