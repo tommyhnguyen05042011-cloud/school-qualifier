@@ -20,7 +20,7 @@ inline bool lastOpticalState = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    bar.move((bar_rotation.get_position()) * -0.05);
+    bar.move((bar_rotation.get_position()) * -0.04);
 }
 inline void claw_score() {
     bar.move((8600 - bar_rotation.get_position()) * 0.05);
@@ -36,11 +36,10 @@ inline void macro_control() {
             } else if (level == 0) {
                 if (clawState == false) {
                     claw_load();
-                    pros::delay(100);
-                    lift.move((lift.get_position()) * 0.3);
+                    lift.move((-lift.get_position()) * 0.4);
                 } else {
                     claw_score();
-                    lift.move((lift.get_position()) * 0.3);
+                    lift.move((-lift.get_position()) * 0.4);
                 }
             } else if (level == 1) {
                 lift.move((1200 - lift.get_position()) * 1);
