@@ -14,7 +14,7 @@ void initialize() {
 	lcd::initialize();
 
 	// bar rotation reset
-	bar_rotation.reset_position();
+	claw_rotation.reset_position();
 	// lift rotation reset
 	lift.tare_position_all();
 	// piston state
@@ -39,7 +39,7 @@ void initialize() {
 				lcd::print(3, "Not Scoring");
 			}
 
-			lcd::print(4, "Bar Rotation: %d", bar_rotation.get_position());
+			lcd::print(4, "Bar Rotation: %d", claw_rotation.get_position());
 
 			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
 			lcd::print(6, "Right Drive Temp: %d", right_motor_group.get_temperature());

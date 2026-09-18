@@ -68,7 +68,7 @@ inline pros::Motor intake(13);
 inline pros::MotorGroup lift({11, -12});
 inline pros::Motor bar(16);
 
-inline pros::Rotation bar_rotation(15);
+inline pros::Rotation claw_rotation(15);
 
 inline pros::ADIDigitalOut claw_piston('H');
 inline pros::ADIDigitalOut intake_pistion_front('A');
