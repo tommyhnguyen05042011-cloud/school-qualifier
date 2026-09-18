@@ -80,18 +80,18 @@ void opcontrol() {
 
 		// intake pneumatics control
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_A)) {
-			intake1State = !intake1State;
-			intake2State = !intake2State;
+			intake1Retract = !intake1Retract;
+			intake2Retract = !intake2Retract;
 		}
-		intake_pistion_front.set_value(intake1State);
-		intake_piston_back.set_value(intake2State);
+		intake_pistion_front.set_value(intake1Retract);
+		intake_piston_back.set_value(intake2Retract);
 
 		// toggle claw
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
-			clawState = !clawState;
+				clawClose = !clawClose;
 		}
-		if (!scoring && level > 0) {
-			claw_piston.set_value(clawState);
+		if (!scoring) {
+			claw_piston.set_value(clawClose);
 		}
 
 		// manual toggle
@@ -125,8 +125,8 @@ void opcontrol() {
 		// load & score
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
 			if (level == 0) {
-				clawState = false;
-				claw_piston.set_value(clawState);
+				clawClose = false;
+				claw_piston.set_value(clawClose);
 			} else {
 				scoring = !scoring;
 				if (scoring) {
