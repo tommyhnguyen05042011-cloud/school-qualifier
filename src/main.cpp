@@ -18,7 +18,7 @@ void initialize() {
 	// lift rotation reset
 	lift.tare_position_all();
 	// piston state
-	claw_piston.set_value(true);
+	claw_piston.set_value(false);
 	intake_pistion_front.set_value(false);
 	intake_piston_back.set_value(false);
 
