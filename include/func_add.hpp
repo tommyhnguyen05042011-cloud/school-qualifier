@@ -14,7 +14,7 @@ inline bool manual = false; /* state of control, manual or macroed.
                                when manual, driver will be able
                                to move the lift to whatever degree of movement he needs */
 
-inline bool clawClose = false;
+inline bool clawClose = true;
 inline bool intake1Retract = false;
 inline bool intake2Retract = false;
 inline bool currentOpticalDetect = false;
@@ -22,15 +22,18 @@ inline bool lastOpticalDetect = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    bar.move((-200 - claw_rotation.get_position()) * 0.04);
+    bar.move((-10 - claw_rotation.get_position()) * 0.05);
 }
 inline void claw_score() {
-    bar.move((8700 - claw_rotation.get_position()) * 0.05);
+    bar.move((8700 - claw_rotation.get_position()) * 0.03);
 }
 
 inline void macro_control() {
 	while (true) {
         if (!scoring && !manual) {
+            if (level > 0) {
+                hold_score = clawClose;
+            }
             if (level == -1) {
                 claw_score();
                 pros::delay(200);
