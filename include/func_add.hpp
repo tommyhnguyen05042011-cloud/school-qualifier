@@ -15,8 +15,8 @@ inline bool manual = false; /* state of control, manual or macroed.
                                to move the lift to whatever degree of movement he needs */
 
 inline bool clawClose = true;
-inline bool intake1Retract = false;
-inline bool intake2Retract = false;
+inline bool intake1Retract = true;
+inline bool intake2Retract = true;
 inline bool currentOpticalDetect = false;
 inline bool lastOpticalDetect = false;
 
@@ -28,7 +28,21 @@ inline void claw_score() {
     bar.move((9000 - claw_rotation.get_position()) * 0.02);
 }
 
-inline void macro_control() {
+inline void macro_intake() {
+    while (true) {
+        if (intake2Retract && optical.get_proximity() > 100) {
+            intake2Retract = false;
+
+            while (optical.get_proximity() > 100) {
+                pros::delay(20);
+            }
+
+            pros::delay(20);
+        }
+    }
+}
+
+inline void macro_lift() {
 	while (true) {
         if (!scoring && !manual) {
             if (level > 0) {
