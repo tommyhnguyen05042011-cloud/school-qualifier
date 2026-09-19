@@ -56,6 +56,9 @@ void opcontrol() {
         int leftY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
         int rightX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
+		//Lift motors positions always set to lift rotation position
+		lift.set_zero_position_all(lift_rotation.get_position());
+
         // move the robot
         chassis.arcade(leftY, rightX, false, 0.5);
 
