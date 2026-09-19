@@ -25,21 +25,21 @@ void initialize() {
 	Task([&] {
 		while (true) {
 			lcd::print(0, "lift Level: %d", level);
-			lcd::print(1, "Lift Rotation: %f", lift.get_position());
 
 			if (loading == true) {
-				lcd::print(2, "Bar: Load");
+				lcd::print(1, "Bar: Load");
 			} else {
-				lcd::print(2, "Bar: Score");
+				lcd::print(1, "Bar: Score");
 			}
 
 			if (scoring == true) {
-				lcd::print(3, "Scoring");
+				lcd::print(2, "Scoring");
 			} else {
-				lcd::print(3, "Not Scoring");
+				lcd::print(2, "Not Scoring");
 			}
 
-			lcd::print(4, "Bar Rotation: %d", claw_rotation.get_position());
+			lcd::print(3, "Bar Rotation: %d", claw_rotation.get_position());
+			lcd::print(4, "Proximity: %ld \n", optical.get_proximity());
 
 			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
 			lcd::print(6, "Right Drive Temp: %d", right_motor_group.get_temperature());
@@ -59,7 +59,8 @@ Controller master(E_CONTROLLER_MASTER);
 
 void opcontrol() {
 	// Start macro task ONCE
-	Task macro_control_task(macro_control);
+	Task macro_lift_task(macro_lift);
+	Task macro_intake_task(macro_intake);
 
 	while (true) {
 		// get left y and right x positions
@@ -83,8 +84,8 @@ void opcontrol() {
 			intake1Retract = !intake1Retract;
 			intake2Retract = !intake2Retract;
 		}
-		intake_pistion_front.set_value(intake1Retract);
-		intake_piston_back.set_value(intake2Retract);
+		intake_pistion_front.set_value(!intake1Retract); //flip both variable bc our pistons are flipped
+		intake_piston_back.set_value(!intake2Retract);
 
 		// toggle claw
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
