@@ -25,24 +25,13 @@ void initialize() {
 	Task([&] {
 		while (true) {
 			lcd::print(0, "lift Level: %d", level);
+			lcd::print(1, "Lift Rotation: %f", lift.get_position());
 
-			if (loading == true) {
-				lcd::print(1, "claw: Load");
-			} else {
-				lcd::print(1, "claw: Score");
-			}
+			lcd::print(2, "Claw Rotation: %d", claw_rotation.get_position());
+			lcd::print(3, "Proximity: %ld \n", optical.get_proximity());
 
-			if (scoring == true) {
-				lcd::print(2, "Scoring");
-			} else {
-				lcd::print(2, "Not Scoring");
-			}
-
-			lcd::print(3, "claw Rotation: %d", claw_rotation.get_position());
-			lcd::print(4, "Proximity: %ld \n", optical.get_proximity());
-
-			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
-			lcd::print(6, "Right Drive Temp: %d", right_motor_group.get_temperature());
+			lcd::print(4, "Left Drive Temp: %d", left_motor_group.get_temperature());
+			lcd::print(5, "Right Drive Temp: %d", right_motor_group.get_temperature());
 
 			delay(100);
     	}
