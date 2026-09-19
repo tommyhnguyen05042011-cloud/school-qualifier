@@ -53,7 +53,10 @@ inline void macro_lift() {
                 hold_score = clawClose;
             }
             if (level == 0) {
-                lift.move(lift.get_position() * -0.3);
+                lift.move_absolute(0, 127);
+                while (!((lift.get_position() < 5) && (lift.get_position() > -5))) {
+                    pros::delay(2);
+                }
                 if (!clawClose) {
                     hold_score = false;
                 }
@@ -63,13 +66,22 @@ inline void macro_lift() {
                     claw_load();
                 }
             } else if (level == 1) {
-                lift.move((2300 - lift.get_position()) * 1);
+                lift.move_absolute(2300, 127);
+                while (!((lift.get_position() < 2305) && (lift.get_position() > 2295))) {
+                    pros::delay(2);
+                }
                 claw_score();
             } else if (level == 2) {
-                lift.move((4500 - lift.get_position()) * 1);;
+                lift.move_absolute(4500, 127);
+                while (!((lift.get_position() < 4505) && (lift.get_position() > 4495))) {
+                    pros::delay(2);
+                }
                 claw_score();
             } else if (level == 3) {
-                lift.move((6000 - lift.get_position()) * 1);
+                lift.move_absolute(6000, 127);
+                while (!((lift.get_position() < 6005) && (lift.get_position() > 5995))) {
+                    pros::delay(2);
+                }
                 claw_score();
             }
         }
