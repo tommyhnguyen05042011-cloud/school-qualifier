@@ -22,7 +22,7 @@ inline bool lastOpticalDetect = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    bar.move((-10 - claw_rotation.get_position()) * 0.05);
+    bar.move(claw_rotation.get_position() * -0.03);
 }
 inline void claw_score() {
     bar.move((8700 - claw_rotation.get_position()) * 0.03);
