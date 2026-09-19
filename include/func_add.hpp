@@ -30,15 +30,19 @@ inline void claw_score() {
 
 inline void macro_intake() {
     while (true) {
-        if (intake2Retract && optical.get_proximity() > 100) {
+        currentOpticalDetect = (optical.get_proximity() > 100);
+
+        if (!intake1Retract) {
             intake2Retract = false;
-
-            while (optical.get_proximity() > 100) {
-                pros::delay(20);
-            }
-
-            pros::delay(20);
+        } else if (currentOpticalDetect && !lastOpticalDetect) {
+            intake2Retract = false;
+            pros::delay(800);
+        } else if (!currentOpticalDetect) {
+            intake2Retract = true;
         }
+
+        lastOpticalDetect = currentOpticalDetect;
+        pros::delay(20);
     }
 }
 
@@ -51,7 +55,7 @@ inline void macro_lift() {
             if (level == -1) {
                 claw_score();
                 pros::delay(200);
-                lift.move(-300 - lift.get_position() * 1);
+                lift.move(-300 - lift.get_position() * 0.5);
             } else if (level == 0) {
                 if (!clawClose) {
                     hold_score = false;
