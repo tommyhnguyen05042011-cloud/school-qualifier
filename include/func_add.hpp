@@ -22,21 +22,21 @@ inline bool lastOpticalDetect = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    claw.move((10 - claw_rotation.get_position()) * 0.02);
+    claw.move((50 - claw_rotation.get_position()) * 0.02);
 }
 inline void claw_score() {
-    claw.move((9000 - claw_rotation.get_position()) * 0.02);
+    claw.move((9000 - claw_rotation.get_position()) * 0.03);
 }
 
 inline void macro_intake() {
     while (true) {
-        currentOpticalDetect = (optical.get_proximity() > 100 && optical.get_proximity() < 255);
+        currentOpticalDetect = (optical.get_proximity() > 50 && optical.get_proximity() < 255);
 
         if (!intake1Retract) {
             intake2Retract = false;
         } else if (currentOpticalDetect && !lastOpticalDetect) {
             intake2Retract = false;
-            pros::delay(800);
+            pros::delay(1500);
         } else if (!currentOpticalDetect) {
             intake2Retract = true;
         }
@@ -57,6 +57,8 @@ inline void macro_lift() {
             //     pros::delay(200);
             //     lift.move(-300 - lift.get_position() * 0.5);
             if (level == 0) {
+                lift.move(lift.get_position() * -0.3);
+                pros::delay(50);
                 if (!clawClose) {
                     hold_score = false;
                 }
@@ -65,22 +67,21 @@ inline void macro_lift() {
                 } else {
                     claw_load();
                 }
-                lift.move((-lift.get_position()) * 0.5);
             } else if (level == 1) {
-                lift.move((1200 - lift.get_position()) * 1);
+                lift.move((1700 - lift.get_position()) * 1);
                 claw_score();
             } else if (level == 2) {
-                lift.move((2000 - lift.get_position()) * 1);;
+                lift.move((3200 - lift.get_position()) * 1);;
                 claw_score();
             } else if (level == 3) {
-                lift.move((2640 - lift.get_position()) * 1);
+                lift.move((5300 - lift.get_position()) * 1);
                 claw_score();
-            } else if (level == 4) {
-                lift.move((3520 - lift.get_position()) * 1);
-                claw_score();
-            } else if (level == 5) {
-                lift.move((4400 - lift.get_position()) * 1);
-                claw_score();
+            // } else if (level == 4) {
+            //     lift.move((3520 - lift.get_position()) * 1);
+            //     claw_score();
+            // } else if (level == 5) {
+            //     lift.move((4400 - lift.get_position()) * 1);
+            //     claw_score();
             }
         }
 		pros::delay(20);
@@ -90,10 +91,11 @@ inline void macro_lift() {
 /* scoring command */
 inline void score_stack() {
     if (level != 0) {
+        claw_piston.set_value(true);
+        pros::delay(200);
+        claw.move((10000 - claw_rotation.get_position()) * 0.03);
+        pros::delay(1000);
         clawClose = false;
-        pros::delay(500);
-        claw.move((12000 - claw_rotation.get_position()) * 0.01);
-        pros::delay(500);
         scoring = false;
     }
 }
