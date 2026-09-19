@@ -22,10 +22,10 @@ inline bool lastOpticalDetect = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    bar.move((10 - claw_rotation.get_position()) * 0.02);
+    claw.move((10 - claw_rotation.get_position()) * 0.02);
 }
 inline void claw_score() {
-    bar.move((9000 - claw_rotation.get_position()) * 0.02);
+    claw.move((9000 - claw_rotation.get_position()) * 0.02);
 }
 
 inline void macro_intake() {
@@ -89,8 +89,11 @@ inline void macro_lift() {
 
 /* scoring command */
 inline void score_stack() {
-    claw_piston.set_value(false);
-    pros::delay(200);
-    bar.move((10000 - claw_rotation.get_position()) * 0.03);
-    scoring = false;
+    if (level != 0) {
+        clawClose = false;
+        pros::delay(500);
+        claw.move((12000 - claw_rotation.get_position()) * 0.01);
+        pros::delay(500);
+        scoring = false;
+    }
 }
