@@ -25,7 +25,7 @@ inline void claw_load() {
     bar.move((10 - claw_rotation.get_position()) * 0.02);
 }
 inline void claw_score() {
-    bar.move((8700 - claw_rotation.get_position()) * 0.02);
+    bar.move((8800 - claw_rotation.get_position()) * 0.02);
 }
 
 inline void macro_control() {
