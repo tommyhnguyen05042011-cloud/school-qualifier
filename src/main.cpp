@@ -13,7 +13,7 @@ using namespace lemlib;
 void initialize() {
 	lcd::initialize();
 
-	// bar rotation reset
+	// claw rotation reset
 	claw_rotation.reset_position();
 	// lift rotation reset
 	lift.tare_position_all();
@@ -27,9 +27,9 @@ void initialize() {
 			lcd::print(0, "lift Level: %d", level);
 
 			if (loading == true) {
-				lcd::print(1, "Bar: Load");
+				lcd::print(1, "claw: Load");
 			} else {
-				lcd::print(1, "Bar: Score");
+				lcd::print(1, "claw: Score");
 			}
 
 			if (scoring == true) {
@@ -38,7 +38,7 @@ void initialize() {
 				lcd::print(2, "Not Scoring");
 			}
 
-			lcd::print(3, "Bar Rotation: %d", claw_rotation.get_position());
+			lcd::print(3, "claw Rotation: %d", claw_rotation.get_position());
 			lcd::print(4, "Proximity: %ld \n", optical.get_proximity());
 
 			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
