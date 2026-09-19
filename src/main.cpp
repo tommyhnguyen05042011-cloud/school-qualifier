@@ -91,7 +91,7 @@ void opcontrol() {
 				clawClose = !clawClose;
 		}
 		if (!scoring) {
-			claw_piston.set_value(clawClose);
+			claw_piston.set_value(!clawClose); //claw piston is flipped so i flipped the clawClose as well
 		}
 
 		// manual toggle
