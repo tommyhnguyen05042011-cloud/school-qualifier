@@ -22,7 +22,7 @@ inline bool lastOpticalDetect = false;
 
 /* claw's position controlling macro. load is only available at lv 0, score is on all level */
 inline void claw_load() {
-    claw.move((50 - claw_rotation.get_position()) * 0.02);
+    claw.move((100 - claw_rotation.get_position()) * 0.005);
 }
 inline void claw_score() {
     claw.move((9000 - claw_rotation.get_position()) * 0.03);
@@ -52,13 +52,8 @@ inline void macro_lift() {
             if (level > 0) {
                 hold_score = clawClose;
             }
-            // if (level == -1) {
-            //     claw_score();
-            //     pros::delay(200);
-            //     lift.move(-300 - lift.get_position() * 0.5);
             if (level == 0) {
                 lift.move(lift.get_position() * -0.3);
-                pros::delay(50);
                 if (!clawClose) {
                     hold_score = false;
                 }
@@ -68,20 +63,14 @@ inline void macro_lift() {
                     claw_load();
                 }
             } else if (level == 1) {
-                lift.move((1700 - lift.get_position()) * 1);
+                lift.move((2300 - lift.get_position()) * 1);
                 claw_score();
             } else if (level == 2) {
-                lift.move((3200 - lift.get_position()) * 1);;
+                lift.move((4500 - lift.get_position()) * 1);;
                 claw_score();
             } else if (level == 3) {
-                lift.move((5300 - lift.get_position()) * 1);
+                lift.move((6000 - lift.get_position()) * 1);
                 claw_score();
-            // } else if (level == 4) {
-            //     lift.move((3520 - lift.get_position()) * 1);
-            //     claw_score();
-            // } else if (level == 5) {
-            //     lift.move((4400 - lift.get_position()) * 1);
-            //     claw_score();
             }
         }
 		pros::delay(20);
