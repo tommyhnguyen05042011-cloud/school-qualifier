@@ -15,7 +15,7 @@ void initialize() {
 
 	// claw rotation reset
 	claw_rotation.reset_position();
-	// lift rotation reset
+	// lift motor rotation reset
 	lift.tare_position_all();
 	// piston state
 	claw_piston.set_value(false);
