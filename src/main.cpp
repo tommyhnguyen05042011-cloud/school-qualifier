@@ -1,10 +1,12 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "pros/abstract_motor.hpp"
 #include "pros/misc.h"
 #include "func_add.hpp"
 #include <csignal>
 #include <cstdio>
 #include "main.h"
 #include "pros/llemu.hpp"
+#include "pros/motors.h"
 #include "pros/rtos.hpp"
 
 using namespace pros;
@@ -17,6 +19,8 @@ void initialize() {
 	claw_rotation.reset_position();
 	// lift motor rotation reset
 	lift.tare_position_all();
+	//lift brake move
+	lift.set_brake_mode_all(E_MOTOR_BRAKE_HOLD);
 	// piston state
 	claw_piston.set_value(false);
 	intake_pistion_front.set_value(false);
