@@ -1,4 +1,5 @@
 #include "subsystem.hpp"
+#include <cmath>
 
 inline int level = 0; /* keeps track of lift's current level */
 inline bool hold_score = false; /* determine whether Claw should stay
@@ -51,33 +52,27 @@ inline void macro_lift() {
                     hold_score = false;
                 }
                 if (hold_score && clawClose) {
-                    claw.move_absolute(9000, 127);
                     clawTarget = 9000;
                 } else {
-                    claw.move_absolute(100, 127);
-                    clawTarget = 100;
+                    clawTarget = 0;
                 }
-                lift.move_absolute(0, 127);
                 liftTarget = 0;
             } else if (level == 1) {
-                claw.move_absolute(9000, 127);
                 clawTarget = 9000;
-                lift.move_absolute(2300, 127);
-                liftTarget = 2300;
+                liftTarget = 2000;
             } else if (level == 2) {
-                claw.move_absolute(9000, 127);
                 clawTarget = 9000;
-                lift.move_absolute(4500, 127);
-                liftTarget = 4500;
+                liftTarget = 4000;
             } else if (level == 3) {
-                claw.move_absolute(9000, 127);
                 clawTarget = 9000;
-                lift.move_absolute(6000, 127);
-                liftTarget = 6000;
+                liftTarget = 5000;
             }
-            while (!(lift.get_position() > (liftTarget + 5) && lift.get_position() < (liftTarget - 5) &&
-                     claw.get_position() > (clawTarget + 5) && claw.get_position() < (clawTarget - 5))) {
-                pros::delay(2);
+            lift.move_absolute(liftTarget, 127);
+            claw.move_absolute(clawTarget, 127);
+            
+            while (std::abs(lift.get_position() - liftTarget) > 20 ||
+                   std::abs(claw.get_position() - clawTarget) > 20) {
+                pros::delay(10);
             }
             lift.brake();
             claw.brake();
