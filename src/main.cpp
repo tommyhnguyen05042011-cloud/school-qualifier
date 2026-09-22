@@ -14,12 +14,15 @@ using namespace lemlib;
 void initialize() {
 	lcd::initialize();
 
-	// claw rotation reset
+	// rotation reset
 	claw_rotation.reset_position();
-	// lift motor rotation reset
+	lift_rotation.reset_position();
+	// motor rotation reset
 	lift.tare_position_all();
+	claw.tare_position();
 	//lift brake move
 	lift.set_brake_mode_all(E_MOTOR_BRAKE_HOLD);
+	claw.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 	// piston state
 	claw_piston.set_value(false);
 	intake_pistion_front.set_value(false);
@@ -59,8 +62,9 @@ void opcontrol() {
         int leftY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
         int rightX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
-		//Lift motors positions always set to lift rotation position
+		// lift and claw motors positions always set to lift and claw rotation position
 		lift.set_zero_position_all(lift_rotation.get_position());
+		claw.set_zero_position(claw_rotation.get_position());
 
         // move the robot
         chassis.arcade(leftY, rightX, false, 0.5);
