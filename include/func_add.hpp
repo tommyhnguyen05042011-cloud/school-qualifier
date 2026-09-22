@@ -19,14 +19,8 @@ inline bool intake1Retract = true;
 inline bool intake2Retract = true;
 inline bool currentOpticalDetect = false;
 inline bool lastOpticalDetect = false;
-
-/* claw's position controlling macro. load is only available at lv 0, score is on all level */
-inline void claw_load() {
-    claw.move((100 - claw_rotation.get_position()) * 0.005);
-}
-inline void claw_score() {
-    claw.move((9000 - claw_rotation.get_position()) * 0.03);
-}
+inline int clawTarget = 0;
+inline int liftTarget = 0;
 
 inline void macro_intake() {
     while (true) {
@@ -57,37 +51,36 @@ inline void macro_lift() {
                     hold_score = false;
                 }
                 if (hold_score && clawClose) {
-                    claw_score();
+                    claw.move_absolute(9000, 127);
+                    clawTarget = 9000;
                 } else {
-                    claw_load();
+                    claw.move_absolute(100, 127);
+                    clawTarget = 100;
                 }
                 lift.move_absolute(0, 127);
-                while (!((lift.get_position() < 5) && (lift.get_position() > -5))) {
-                    pros::delay(2);
-                }
-                lift.brake();
+                liftTarget = 0;
             } else if (level == 1) {
-                claw_score();
+                claw.move_absolute(9000, 127);
+                clawTarget = 9000;
                 lift.move_absolute(2300, 127);
-                while (!((lift.get_position() < 2305) && (lift.get_position() > 2295))) {
-                    pros::delay(2);
-                }
-                lift.brake();
+                liftTarget = 2300;
             } else if (level == 2) {
-                claw_score();
+                claw.move_absolute(9000, 127);
+                clawTarget = 9000;
                 lift.move_absolute(4500, 127);
-                while (!((lift.get_position() < 4505) && (lift.get_position() > 4495))) {
-                    pros::delay(2);
-                }
-                lift.brake();
+                liftTarget = 4500;
             } else if (level == 3) {
-                claw_score();
+                claw.move_absolute(9000, 127);
+                clawTarget = 9000;
                 lift.move_absolute(6000, 127);
-                while (!((lift.get_position() < 6005) && (lift.get_position() > 5995))) {
-                    pros::delay(2);
-                }
-                lift.brake();
+                liftTarget = 6000;
             }
+            while (!(lift.get_position() > (liftTarget + 5) && lift.get_position() < (liftTarget - 5) &&
+                     claw.get_position() > (clawTarget + 5) && claw.get_position() < (clawTarget - 5))) {
+                pros::delay(2);
+            }
+            lift.brake();
+            claw.brake();
         }
 		pros::delay(20);
 	}
@@ -98,7 +91,11 @@ inline void score_stack() {
     if (level != 0) {
         claw_piston.set_value(true);
         pros::delay(200);
-        claw.move((10000 - claw_rotation.get_position()) * 0.03);
+        claw.move_absolute(10000, 127);
+        clawTarget = 10000;
+        while (!((claw.get_position() > (clawTarget + 5)) && (claw.get_position() < (clawTarget - 5)))) {
+            pros::delay(2);
+        }
         pros::delay(1000);
         clawClose = false;
         scoring = false;
