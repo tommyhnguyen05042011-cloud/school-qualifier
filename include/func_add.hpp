@@ -19,14 +19,12 @@ inline bool intake1Retract = true;
 inline bool intake2Retract = true;
 inline bool currentOpticalDetect = false;
 inline bool lastOpticalDetect = false;
-
-/* claw's position controlling macro. load is only available at lv 0, score is on all level */
-inline void claw_load() {
-    claw.move((100 - claw_rotation.get_position()) * 0.005);
-}
-inline void claw_score() {
-    claw.move((9000 - claw_rotation.get_position()) * 0.03);
-}
+inline int liftTarget;
+inline int clawTarget;
+inline int liftError;
+inline int clawError;
+inline float liftkP = 0.45;
+inline float clawkP = 0.03;
 
 inline void macro_intake() {
     while (true) {
@@ -53,25 +51,30 @@ inline void macro_lift() {
                 hold_score = clawClose;
             }
             if (level == 0) {
-                lift.move(lift.get_position() * -0.3);
                 if (!clawClose) {
                     hold_score = false;
                 }
                 if (hold_score && clawClose) {
-                    claw_score();
+                    clawTarget = 9000;
                 } else {
-                    claw_load();
+                    clawTarget = 0;
                 }
+                liftTarget = 0;
             } else if (level == 1) {
-                lift.move((2300 - lift.get_position()) * 1);
-                claw_score();
+                clawTarget = 9000;
+                liftTarget = 1900;
             } else if (level == 2) {
-                lift.move((4500 - lift.get_position()) * 1);;
-                claw_score();
+                clawTarget = 9000;
+                liftTarget = 4400;
             } else if (level == 3) {
-                lift.move((6000 - lift.get_position()) * 1);
-                claw_score();
+                clawTarget = 9000;
+                liftTarget  = 6800;
             }
+            clawError = clawTarget - claw_rotation.get_position();
+            liftError = liftTarget - lift_rotation.get_position()/100;
+
+            claw.move(clawError * clawkP);
+            lift.move(liftError * liftkP);
         }
 		pros::delay(20);
 	}
