@@ -49,7 +49,7 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	chassis.turnToHeading(90, 100000);
+	chassis.moveToPoint(0, 24, 100000);
 }
 
 Controller master(E_CONTROLLER_MASTER);
