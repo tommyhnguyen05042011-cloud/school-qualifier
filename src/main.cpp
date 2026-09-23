@@ -50,7 +50,7 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	chassis.moveToPoint(0, 12, 5000);
+	chassis.moveToPoint(0, 24, 5000);
 	chassis.waitUntilDone();
 }
 
