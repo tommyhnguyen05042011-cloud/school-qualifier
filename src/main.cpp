@@ -33,12 +33,11 @@ void initialize() {
             lcd::print(2, "Theta: %.3f", chassis.getPose().theta);
 
 			lcd::print(3, "lift Level: %d", level);
-			lcd::print(4, "Lift Rotation: %d", lift_rotation.get_position()/100);
 
-			lcd::print(5, "Claw Rotation: %d", claw_rotation.get_position());
+			lcd::print(4, "Claw Rotation: %d", claw_rotation.get_position());
 
-			lcd::print(6, "Left Drive Temp: %d", left_motor_group.get_temperature());
-			lcd::print(7, "Right Drive Temp: %d", right_motor_group.get_temperature());
+			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
+			lcd::print(6, "Right Drive Temp: %d", right_motor_group.get_temperature());
 
 			delay(100);
     	}
