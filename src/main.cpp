@@ -54,12 +54,12 @@ void competition_initialize() {}
 void autonomous() {
 	// toggle
 	chassis.tank(-60, -60);
-	delay(300);
-	chassis.tank(70, 70);
-	delay(500);
+	delay(250);
+	chassis.tank(60, 60);
+	delay(350);
 
 	// 1st goal
-	chassis.moveToPose(-47, -17.67, 0, 5000, {.forwards = false, .lead = 0.5});
+	chassis.moveToPose(-45, -17.67, 0, 5000, {.forwards = false});
 	level = 1;
 	chassis.waitUntilDone();
 }
