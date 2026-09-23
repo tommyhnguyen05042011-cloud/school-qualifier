@@ -108,6 +108,14 @@ void opcontrol() {
 			} else {
 				lift.move(0);
 			}
+			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)) {
+				clawLower = !clawLower;
+			}
+			if (clawLower) {
+				claw.move((9000 - claw_rotation.get_position()) * clawkP);
+			} else {
+				claw.move((8000 - claw_rotation.get_position()) * clawkP);
+			}
 		} else {
 			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
 				scoring = false;
