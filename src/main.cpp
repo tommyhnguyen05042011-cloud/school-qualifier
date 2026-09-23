@@ -24,7 +24,7 @@ void initialize() {
 
 	//chassis initilize
 	chassis.calibrate();
-	chassis.setPose(0, 0, 0, false);
+	chassis.setPose(-58.85, -6.5, 270, false);
 
 	Task([&] {
 		while (true) {
@@ -44,21 +44,29 @@ void initialize() {
     });
 }
 
+Task macro_lift_task(macro_lift);
+Task macro_intake_task(macro_intake);
+
 void disabled() {}
 
 void competition_initialize() {}
 
 void autonomous() {
-	chassis.moveToPoint(0, 24, 100000);
+	// toggle
+	chassis.tank(-50, -50);
+	delay(500);
+	chassis.tank(50, 50);
+	delay(500);
+
+	// 1st goal
+	chassis.moveToPose(-47, -17.67, 0, 5000, {.forwards = false});
+	level = 1;
+	chassis.waitUntilDone();
 }
 
 Controller master(E_CONTROLLER_MASTER);
 
 void opcontrol() {
-	// Start macro task ONCE
-	Task macro_lift_task(macro_lift);
-	Task macro_intake_task(macro_intake);
-
 	while (true) {
 		// get left y and right x positions
         int leftY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
