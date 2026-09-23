@@ -28,9 +28,9 @@ void initialize() {
 
 	Task([&] {
 		while (true) {
-			lcd::print(0, "Robot X: %d", chassis.getPose().x);
-			lcd::print(1, "Robot Y: %d", chassis.getPose().y);
-			lcd::print(2, "Robot Theta: %d", chassis.getPose().theta);
+			lcd::print(0, "X: %3f", chassis.getPose().x);
+            lcd::print(1, "Y: %3f", chassis.getPose().y);
+            lcd::print(2, "Theta: %3f", chassis.getPose().theta);
 
 			lcd::print(3, "lift Level: %d", level);
 			lcd::print(4, "Lift Rotation: %d", lift_rotation.get_position()/100);
@@ -50,8 +50,7 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	chassis.moveToPoint(0, 24, 5000);
-	chassis.waitUntilDone();
+	chassis.turnToHeading(90, 100000);
 }
 
 Controller master(E_CONTROLLER_MASTER);
