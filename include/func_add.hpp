@@ -66,10 +66,10 @@ inline void macro_lift() {
                 liftTarget = 1900;
             } else if (level == 2) {
                 clawTarget = 9000;
-                liftTarget = 4400;
+                liftTarget = 4500;
             } else if (level == 3) {
                 clawTarget = 9000;
-                liftTarget  = 6800;
+                liftTarget  = 7100;
             }
             clawError = clawTarget - claw_rotation.get_position();
             liftError = liftTarget - lift_rotation.get_position()/100;
