@@ -59,7 +59,7 @@ void autonomous() {
 	delay(500);
 
 	// 1st goal
-	chassis.moveToPose(-47, -17.67, 0, 5000, {.forwards = false});
+	chassis.moveToPose(-47, -17.67, 0, 5000, {.forwards = false, .lead = 0.5});
 	level = 1;
 	chassis.waitUntilDone();
 }
