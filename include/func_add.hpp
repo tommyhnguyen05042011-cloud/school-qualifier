@@ -15,7 +15,7 @@ inline bool manual = false; /* state of control, manual or macroed.
                                to move the lift to whatever degree of movement he needs */
 
 inline bool clawClose = true;
-inline bool clawLower = false;
+inline bool clawLower = true;
 inline bool intake1Retract = true;
 inline bool intake2Retract = true;
 inline bool currentOpticalDetect = false;

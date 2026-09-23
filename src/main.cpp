@@ -112,9 +112,9 @@ void opcontrol() {
 				clawLower = !clawLower;
 			}
 			if (clawLower) {
-				claw.move((9000 - claw_rotation.get_position()) * clawkP);
+				claw.move((9000 - claw_rotation.get_position()) * 0.01);
 			} else {
-				claw.move((8000 - claw_rotation.get_position()) * clawkP);
+				claw.move((7000 - claw_rotation.get_position()) * 0.01);
 			}
 		} else {
 			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
