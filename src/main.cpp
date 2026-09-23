@@ -1,4 +1,5 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "lemlib/chassis/chassis.hpp"
 #include "pros/misc.h"
 #include "func_add.hpp"
 #include <csignal>
@@ -27,15 +28,17 @@ void initialize() {
 
 	Task([&] {
 		while (true) {
-			lcd::print(0, "lift Level: %d", level);
-			lcd::print(1, "Lift Rotation: %d", lift_rotation.get_position()/10);
+			lcd::print(0, "Robot X: %d", chassis.getPose().x);
+			lcd::print(1, "Robot Y: %d", chassis.getPose().y);
+			lcd::print(2, "Robot Theta: %d", chassis.getPose().theta);
 
-			lcd::print(2, "Claw Rotation: %d", claw_rotation.get_position());
-			lcd::print(3, "Proximity: %ld \n", optical.get_proximity());
+			lcd::print(3, "lift Level: %d", level);
+			lcd::print(4, "Lift Rotation: %d", lift_rotation.get_position()/100);
 
-			lcd::print(4, "Left Drive Temp: %d", left_motor_group.get_temperature());
-			lcd::print(5, "Right Drive Temp: %d", right_motor_group.get_temperature());
-			lcd::print(6, "Lift Error: %d", liftError);
+			lcd::print(5, "Claw Rotation: %d", claw_rotation.get_position());
+
+			lcd::print(6, "Left Drive Temp: %d", left_motor_group.get_temperature());
+			lcd::print(7, "Right Drive Temp: %d", right_motor_group.get_temperature());
 
 			delay(100);
     	}
@@ -47,7 +50,7 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	chassis.moveToPoint(10, 0, 5000);
+	chassis.moveToPoint(0, 12, 5000);
 	chassis.waitUntilDone();
 }
 
@@ -105,7 +108,6 @@ void opcontrol() {
 			} else {
 				lift.move(0);
 			}
-			claw.brake();
 		} else {
 			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
 				scoring = false;
