@@ -52,15 +52,16 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
+	manual = true;
 	// toggle
 	chassis.tank(-60, -60);
-	delay(250);
+	delay(200);
 	chassis.tank(60, 60);
-	delay(350);
+	delay(300);
 
 	// 1st goal
-	chassis.moveToPose(-45, -17.67, 0, 5000, {.forwards = false});
-	level = 1;
+	chassis.moveToPose(-45, -20, 0, 5000, {.forwards = false});
+	lift.move((1000 - lift_rotation.get_position() * liftkP));
 	chassis.waitUntilDone();
 }
 
