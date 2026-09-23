@@ -53,9 +53,9 @@ void competition_initialize() {}
 
 void autonomous() {
 	// toggle
-	chassis.tank(-50, -50);
-	delay(500);
-	chassis.tank(50, 50);
+	chassis.tank(-60, -60);
+	delay(300);
+	chassis.tank(70, 70);
 	delay(500);
 
 	// 1st goal
