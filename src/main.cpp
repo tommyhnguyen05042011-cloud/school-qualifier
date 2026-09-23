@@ -28,9 +28,9 @@ void initialize() {
 
 	Task([&] {
 		while (true) {
-			lcd::print(0, "X: %3f", chassis.getPose().x);
-            lcd::print(1, "Y: %3f", chassis.getPose().y);
-            lcd::print(2, "Theta: %3f", chassis.getPose().theta);
+			lcd::print(0, "X: %.3f", chassis.getPose().x);
+            lcd::print(1, "Y: %.3f", chassis.getPose().y);
+            lcd::print(2, "Theta: %.3f", chassis.getPose().theta);
 
 			lcd::print(3, "lift Level: %d", level);
 			lcd::print(4, "Lift Rotation: %d", lift_rotation.get_position()/100);
