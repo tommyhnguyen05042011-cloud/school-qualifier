@@ -44,7 +44,7 @@ void initialize() {
     });
 }
 
-Task macro_lift_task(macro_lift);
+Task auto_lift_task(lift_auto);
 Task macro_intake_task(macro_intake);
 
 void disabled() {}
@@ -61,13 +61,15 @@ void autonomous() {
 
 	// 1st goal
 	chassis.moveToPose(-45, -20, 0, 5000, {.forwards = false});
-	lift.move((1000 - lift_rotation.get_position() * liftkP));
+	liftTarget = 1000;
 	chassis.waitUntilDone();
 }
 
 Controller master(E_CONTROLLER_MASTER);
 
 void opcontrol() {
+	auto_lift_task.remove();
+	Task macro_lift_task(macro_lift);
 	while (true) {
 		// get left y and right x positions
         int leftY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);

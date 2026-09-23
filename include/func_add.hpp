@@ -81,6 +81,14 @@ inline void macro_lift() {
 	}
 }
 
+inline void lift_auto() {
+    while (true) {
+        liftError = liftTarget - lift_rotation.get_position()/100;
+        lift.move(liftError * liftkP);
+        pros::delay(20);
+    }
+}
+
 /* scoring command */
 inline void score_stack() {
     if (level != 0) {
