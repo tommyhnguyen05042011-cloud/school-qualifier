@@ -13,25 +13,29 @@ using namespace lemlib;
 void initialize() {
 	lcd::initialize();
 
-	// claw rotation reset
+	// rotation reset
 	claw_rotation.reset_position();
-	// lift motor rotation reset
-	lift.tare_position_all();
+	lift_rotation.reset_position();
 	// piston state
 	claw_piston.set_value(false);
 	intake_pistion_front.set_value(false);
 	intake_piston_back.set_value(false);
 
+	//chassis initilize
+	chassis.calibrate();
+	chassis.setPose(0, 0, 0, false);
+
 	Task([&] {
 		while (true) {
 			lcd::print(0, "lift Level: %d", level);
-			lcd::print(1, "Lift Rotation: %f", lift.get_position());
+			lcd::print(1, "Lift Rotation: %d", lift_rotation.get_position()/10);
 
 			lcd::print(2, "Claw Rotation: %d", claw_rotation.get_position());
 			lcd::print(3, "Proximity: %ld \n", optical.get_proximity());
 
 			lcd::print(4, "Left Drive Temp: %d", left_motor_group.get_temperature());
 			lcd::print(5, "Right Drive Temp: %d", right_motor_group.get_temperature());
+			lcd::print(6, "Lift Error: %d", liftError);
 
 			delay(100);
     	}
@@ -42,7 +46,10 @@ void disabled() {}
 
 void competition_initialize() {}
 
-void autonomous() {}
+void autonomous() {
+	chassis.moveToPoint(10, 0, 5000);
+	chassis.waitUntilDone();
+}
 
 Controller master(E_CONTROLLER_MASTER);
 
@@ -98,6 +105,7 @@ void opcontrol() {
 			} else {
 				lift.move(0);
 			}
+			claw.brake();
 		} else {
 			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
 				scoring = false;
@@ -106,7 +114,7 @@ void opcontrol() {
 				}
 			} else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)) {
 				scoring = false;
-				if (level > -1) {
+				if (level > 0) {
 					level--;
 				}
 			}
