@@ -39,6 +39,8 @@ void initialize() {
 			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
 			lcd::print(6, "Right Drive Temp: %d", right_motor_group.get_temperature());
 
+			lcd::print(7, "Lift Error: %d", liftError);
+
 			delay(100);
     	}
     });
@@ -52,17 +54,59 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	manual = true;
+	liftTarget = 0;
+	clawTarget = 0;
 	// toggle
 	chassis.tank(-60, -60);
-	delay(200);
+	delay(400);
 	chassis.tank(60, 60);
-	delay(300);
+	delay(530);
 
-	// 1st goal
-	chassis.moveToPose(-45, -20, 0, 5000, {.forwards = false});
+	// alliance goal 1
+	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
+	liftTarget = 500;
+	clawTarget = 9000;
+	while (chassis.isInMotion()) {
+		delay(2);
+	}
+	chassis.tank(-30, -30); // push into goal
+	liftTarget = -950;
+	while (std::abs(liftError) > 10) {
+		delay(2);
+	}
+	delay(200);
+	claw_piston.set_value(true);
+	delay(200);
 	liftTarget = 1000;
-	chassis.waitUntilDone();
+
+	// stack up
+	chassis.setPose(47, 16.67, 0); // reset pose to minimise error
+	intake.move(127);
+	chassis.moveToPose(-39.2, -14.5, 75, 3000, {.minSpeed = 50, .earlyExitRange = 4}); // motion chain
+	delay(400);
+	clawTarget = 0;
+	liftTarget = 0;
+	chassis.moveToPose(-26.6, -19.7, 137, 5000);
+	// while (chassis.isInMotion() || std::abs(liftError) > 20) { // wait for robot to stop AND lift to finish movement
+	// 	delay(2);
+	// }
+	// chassis.tank(-20, -20); // prevent stack from stucking
+	// delay(200);
+	// chassis.tank(0, 0);
+	// delay(800); // delay before checking stage 2 intake state
+	// while (intake2Retract) { // wait until intake stage 2 drops down
+	// 	delay(2);
+	// }
+	// delay(2000); // wait for stack to settle inside claw
+	
+	// claw_piston.set_value(false);
+	// clawTarget = 9000;
+	// liftTarget = 1900;
+	// chassis.turnToPoint(-40, -23.5, 3000);
+	// while (chassis.isInMotion() || std::abs(liftError) > 20) {
+	// 	delay(2);
+	// }
+	// chassis.moveToPose(-40, -23.5, 90, 3000);
 }
 
 Controller master(E_CONTROLLER_MASTER);
@@ -70,6 +114,7 @@ Controller master(E_CONTROLLER_MASTER);
 void opcontrol() {
 	auto_lift_task.remove();
 	Task macro_lift_task(macro_lift);
+	manual = false;
 	while (true) {
 		// get left y and right x positions
         int leftY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
