@@ -59,7 +59,7 @@ void autonomous() {
 	chassis.tank(0, 0);
 	delay(200);
 	chassis.tank(-30, -30);
-	delay(200);
+	delay(100);
 
 	// alliance goal 1
 	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
@@ -88,25 +88,26 @@ void autonomous() {
 	liftTarget = 0;
 	chassis.moveToPose(-29.1, -19.7, 137, 1500);
 	chassis.waitUntilDone();
-	chassis.tank(-20, -20);
-	delay(200);
+	chassis.tank(-50, -50);
+	delay(100);
 	chassis.tank(0, 0);
-	delay(500);
+	delay(100);
+	chassis.tank(50, 50);
+	delay(100);
+	chassis.tank(0, 0);
+	delay(300);
 	intake_piston_back.set_value(true);
 	delay(1500);
-	intake_piston_back.set_value(false);
 	claw_piston.set_value(false);
 
 	// stack up
-	chassis.turnToPoint(-40, -23.5, 1000, {.forwards = false});
 	liftTarget = 1900;
 	clawTarget = 9000;
-	// chassis.waitUntilDone();
-	// while (std::abs(liftError) > 10) {
-	// 	delay(10);
-	// }
-	// chassis.moveToPose(-40, -23.5, 90, 3000, {.forwards = false});
-	// chassis.waitUntilDone();
+	delay(200);
+	intake_piston_back.set_value(false);
+	chassis.turnToPoint(-43, -23.5, 1000);
+	chassis.waitUntilDone();
+	chassis.moveToPose(-43, -23.5, 90, 3000, {.forwards = false});
 }
 
 Controller master(E_CONTROLLER_MASTER);
