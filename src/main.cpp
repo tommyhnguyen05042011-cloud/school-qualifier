@@ -54,8 +54,8 @@ void autonomous() {
 	// toggle
 	chassis.tank(-60, -60);
 	delay(400);
-	chassis.tank(60, 60);
-	delay(530);
+	chassis.tank(50, 50);
+	delay(650);
 	chassis.tank(0, 0);
 	delay(200);
 	chassis.tank(-30, -30);
@@ -106,7 +106,7 @@ void autonomous() {
 	liftTarget = 1900;
 	clawTarget = 9500;
 	delay(200);
-	chassis.moveToPose(-45, -22, 90, 1500, {.forwards = false});
+	chassis.moveToPose(-45, -22, 90, 1800, {.forwards = false});
 	clawTarget = 9000;
 	chassis.waitUntilDone();
 	claw_piston.set_value(true);
