@@ -110,6 +110,15 @@ void autonomous() {
 	clawTarget = 9000;
 	chassis.waitUntilDone();
 	claw_piston.set_value(true);
+
+	chassis.setPose(-40.17, -23.5, 90); // reset pose
+	delay(300);
+	clawTarget = 10500;
+	chassis.moveToPose(-37.1, -32.9, 188, 1300, {.minSpeed = 70, .earlyExitRange = 4});
+	delay(500);
+	clawTarget = 0;
+	liftTarget = 0;
+	chassis.moveToPose(-47, -47, 225, 1500);
 }
 
 Controller master(E_CONTROLLER_MASTER);
