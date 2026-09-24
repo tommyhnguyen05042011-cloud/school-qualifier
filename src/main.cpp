@@ -64,7 +64,7 @@ void autonomous() {
 	delay(200);
 
 	// alliance goal 1
-	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
+	chassis.moveToPose(-45.5, -20, 0, 2000, {.forwards = false});
 	liftTarget = 500;
 	clawTarget = 9000;
 	while (chassis.isInMotion()) {
