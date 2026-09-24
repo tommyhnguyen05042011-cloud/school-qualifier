@@ -106,7 +106,7 @@ void autonomous() {
 	liftTarget = 1900;
 	clawTarget = 9500;
 	delay(200);
-	chassis.moveToPose(-45, -22, 90, 1800, {.forwards = false});
+	chassis.moveToPose(-45, -22, 90, 2000, {.forwards = false});
 	clawTarget = 9000;
 	chassis.waitUntilDone();
 	claw_piston.set_value(true);
