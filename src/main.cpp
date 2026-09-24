@@ -110,6 +110,7 @@ void autonomous() {
 	clawTarget = 9000;
 	chassis.waitUntilDone();
 	claw_piston.set_value(true);
+	delay(500);
 
 	clawTarget = 10500;
 	chassis.moveToPoint(-7.7, -8, 3000);
