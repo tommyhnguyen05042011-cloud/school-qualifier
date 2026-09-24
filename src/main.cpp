@@ -97,16 +97,14 @@ void autonomous() {
 	chassis.tank(0, 0);
 	delay(300);
 	intake_piston_back.set_value(true);
-	delay(1500);
+	delay(1000);
 	claw_piston.set_value(false);
+	intake_piston_back.set_value(false);
 
 	// stack up
 	liftTarget = 1900;
 	clawTarget = 9000;
 	delay(200);
-	intake_piston_back.set_value(false);
-	chassis.turnToPoint(-43, -23.5, 1000);
-	chassis.waitUntilDone();
 	chassis.moveToPose(-43, -23.5, 90, 3000, {.forwards = false});
 }
 
