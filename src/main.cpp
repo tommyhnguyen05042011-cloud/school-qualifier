@@ -94,6 +94,7 @@ void autonomous() {
 	claw_piston.set_value(false);
 	intake.move(0);
 
+	// stack up
 	chassis.turnToPoint(-40, -23.5, 2000, {.forwards = false});
 	liftTarget = 1900;
 	clawTarget = 9000;
