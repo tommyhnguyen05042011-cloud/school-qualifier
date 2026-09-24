@@ -56,19 +56,19 @@ inline void macro_lift() {
                     hold_score = false;
                 }
                 if (hold_score && clawClose) {
-                    clawTarget = 9000;
+                    clawTarget = 9200;
                 } else {
                     clawTarget = 0;
                 }
                 liftTarget = 0;
             } else if (level == 1) {
-                clawTarget = 9000;
+                clawTarget = 9200;
                 liftTarget = 1900;
             } else if (level == 2) {
-                clawTarget = 9000;
+                clawTarget = 9200;
                 liftTarget = 4500;
             } else if (level == 3) {
-                clawTarget = 9000;
+                clawTarget = 9200;
                 liftTarget  = 7100;
             }
             clawError = clawTarget - claw_rotation.get_position();
