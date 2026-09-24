@@ -32,22 +32,19 @@ void initialize() {
             lcd::print(1, "Y: %.3f", chassis.getPose().y);
             lcd::print(2, "Theta: %.3f", chassis.getPose().theta);
 
-			lcd::print(3, "lift Level: %d", level);
+			lcd::print(3, "Lift Level: %d", level);
 
-			lcd::print(4, "Claw Rotation: %d", claw_rotation.get_position());
+			lcd::print(4, "Left Drive Temp: %d", left_motor_group.get_temperature());
+			lcd::print(5, "Right Drive Temp: %d", right_motor_group.get_temperature());
 
-			lcd::print(5, "Left Drive Temp: %d", left_motor_group.get_temperature());
-			lcd::print(6, "Right Drive Temp: %d", right_motor_group.get_temperature());
+			lcd::print(6, "Lift Error: %d", liftError);
 
-			lcd::print(7, "Lift Error: %d", liftError);
-
-			delay(100);
+			delay(200);
     	}
     });
 }
 
 Task auto_lift_task(lift_auto);
-Task macro_intake_task(macro_intake);
 
 void disabled() {}
 
@@ -74,23 +71,26 @@ void autonomous() {
 		delay(2);
 	}
 	chassis.tank(-30, -30); // push into goal
-	liftTarget = -950;
+	liftTarget = -1100;
 	while (std::abs(liftError) > 10) {
 		delay(2);
 	}
-	delay(200);
+	chassis.tank(0, 0);
+	delay(500);
 	claw_piston.set_value(true);
-	delay(200);
+	delay(500);
 	liftTarget = 1000;
 
 	// stack up
 	chassis.setPose(-47, -16.67, 0); // reset pose to minimise error
 	intake.move(127);
-	chassis.moveToPose(-39.2, -14.5, 75, 3000, {.minSpeed = 50, .earlyExitRange = 4}); // motion chain
-	delay(400);
+	chassis.moveToPose(-37.7, -14, 83, 3000, {.minSpeed = 70, .earlyExitRange = 4}); // motion chain
+	delay(500);
 	clawTarget = 0;
 	liftTarget = 0;
-	chassis.moveToPose(-26.6, -19.7, 137, 5000);
+	chassis.moveToPose(-28.1, -19.7, 137, 4000);
+	delay(2000);
+	intake_piston_back.set_value(true);
 	// while (chassis.isInMotion() || std::abs(liftError) > 20) { // wait for robot to stop AND lift to finish movement
 	// 	delay(2);
 	// }
@@ -118,6 +118,7 @@ Controller master(E_CONTROLLER_MASTER);
 void opcontrol() {
 	auto_lift_task.remove();
 	Task macro_lift_task(macro_lift);
+	Task macro_intake_task(macro_intake);
 	manual = false;
 	while (true) {
 		// get left y and right x positions
