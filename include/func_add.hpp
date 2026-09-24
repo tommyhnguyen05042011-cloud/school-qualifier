@@ -84,7 +84,9 @@ inline void macro_lift() {
 inline void lift_auto() {
     while (true) {
         liftError = liftTarget - lift_rotation.get_position()/100;
+        clawError = clawTarget - claw_rotation.get_position();
         lift.move(liftError * liftkP);
+        claw.move(clawError * clawkP);
         pros::delay(20);
     }
 }
