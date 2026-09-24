@@ -84,7 +84,7 @@ void autonomous() {
 	liftTarget = 1000;
 
 	// stack up
-	chassis.setPose(47, 16.67, 0); // reset pose to minimise error
+	chassis.setPose(-47, -16.67, 0); // reset pose to minimise error
 	intake.move(127);
 	chassis.moveToPose(-39.2, -14.5, 75, 3000, {.minSpeed = 50, .earlyExitRange = 4}); // motion chain
 	delay(400);
