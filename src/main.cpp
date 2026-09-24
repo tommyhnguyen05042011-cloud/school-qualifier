@@ -100,12 +100,18 @@ void autonomous() {
 	delay(1000);
 	claw_piston.set_value(false);
 	intake_piston_back.set_value(false);
+	delay(200);
 
 	// stack up
 	liftTarget = 1900;
-	clawTarget = 9000;
+	clawTarget = 9500;
 	delay(200);
-	chassis.moveToPose(-43, -23.5, 90, 3000, {.forwards = false});
+	chassis.moveToPose(-45, -22, 90, 3000, {.forwards = false});
+	clawTarget = 9000;
+	while (std::abs(clawError) > 10) {
+		delay(2);
+	}
+	claw_piston.set_value(true);
 }
 
 Controller master(E_CONTROLLER_MASTER);
