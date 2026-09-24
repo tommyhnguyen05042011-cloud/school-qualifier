@@ -94,13 +94,13 @@ void autonomous() {
 	claw_piston.set_value(false);
 	intake.move(0);
 
-	chassis.turnToPoint(-40, -23.5, 3000);
+	chassis.turnToPoint(-40, -23.5, 2000, {.forwards = false});
 	liftTarget = 1900;
 	clawTarget = 9000;
-	while(chassis.isInMotion() || std::abs(liftError) > 10 || std::abs(clawError) > 10) {
+	while(chassis.isInMotion() || std::abs(liftError) > 10) {
 		delay(2);
 	}
-	chassis.moveToPose(-40, -23.5, 90, 3000);
+	chassis.moveToPose(-40, -23.5, 90, 3000, {.forwards = false});
 	chassis.waitUntilDone();
 }
 
