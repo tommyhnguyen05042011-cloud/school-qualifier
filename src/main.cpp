@@ -64,7 +64,7 @@ void autonomous() {
 	delay(200);
 
 	// alliance goal 1
-	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
+	chassis.moveToPose(-46, -20, 0, 2000, {.forwards = false});
 	liftTarget = 500;
 	clawTarget = 9000;
 	while (chassis.isInMotion()) {
@@ -88,9 +88,12 @@ void autonomous() {
 	delay(500);
 	clawTarget = 0;
 	liftTarget = 0;
-	chassis.moveToPose(-28.1, -19.7, 137, 4000);
-	delay(2000);
+	chassis.moveToPose(-29.1, -19.7, 137, 4000);
+	delay(1800);
 	intake_piston_back.set_value(true);
+	delay(500);
+	intake_piston_back.set_value(false);
+	claw_piston.set_value(false);
 	// while (chassis.isInMotion() || std::abs(liftError) > 20) { // wait for robot to stop AND lift to finish movement
 	// 	delay(2);
 	// }
