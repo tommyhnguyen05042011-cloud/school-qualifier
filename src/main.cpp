@@ -51,8 +51,6 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	liftTarget = 0;
-	clawTarget = 0;
 	// toggle
 	chassis.tank(-60, -60);
 	delay(400);
@@ -64,7 +62,7 @@ void autonomous() {
 	delay(200);
 
 	// alliance goal 1
-	chassis.moveToPose(-45.5, -20, 0, 2000, {.forwards = false});
+	chassis.moveToPose(-45.5, -20, 0, 2000, {.forwards = false, .lead = 0.5});
 	liftTarget = 500;
 	clawTarget = 9000;
 	while (chassis.isInMotion()) {
@@ -94,26 +92,16 @@ void autonomous() {
 	delay(1000);
 	intake_piston_back.set_value(false);
 	claw_piston.set_value(false);
-	// while (chassis.isInMotion() || std::abs(liftError) > 20) { // wait for robot to stop AND lift to finish movement
-	// 	delay(2);
-	// }
-	// chassis.tank(-20, -20); // prevent stack from stucking
-	// delay(200);
-	// chassis.tank(0, 0);
-	// delay(800); // delay before checking stage 2 intake state
-	// while (intake2Retract) { // wait until intake stage 2 drops down
-	// 	delay(2);
-	// }
-	// delay(2000); // wait for stack to settle inside claw
-	
-	// claw_piston.set_value(false);
-	// clawTarget = 9000;
-	// liftTarget = 1900;
-	// chassis.turnToPoint(-40, -23.5, 3000);
-	// while (chassis.isInMotion() || std::abs(liftError) > 20) {
-	// 	delay(2);
-	// }
-	// chassis.moveToPose(-40, -23.5, 90, 3000);
+	intake.move(0);
+
+	chassis.turnToPoint(-40, -23.5, 3000);
+	liftTarget = 1900;
+	clawTarget = 9000;
+	while(chassis.isInMotion() || std::abs(liftError) > 10 || std::abs(clawError) > 10) {
+		delay(2);
+	}
+	chassis.moveToPose(-40, -23.5, 90, 3000);
+	chassis.waitUntilDone();
 }
 
 Controller master(E_CONTROLLER_MASTER);
