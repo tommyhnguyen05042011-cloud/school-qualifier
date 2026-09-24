@@ -62,7 +62,7 @@ void autonomous() {
 	delay(200);
 
 	// alliance goal 1
-	chassis.moveToPose(-45.5, -20, 0, 2000, {.forwards = false, .lead = 0.5});
+	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
 	liftTarget = 500;
 	clawTarget = 9000;
 	while (chassis.isInMotion()) {
@@ -82,27 +82,31 @@ void autonomous() {
 	// stack up
 	chassis.setPose(-47, -16.67, 0); // reset pose to minimise error
 	intake.move(127);
-	chassis.moveToPose(-37.7, -14, 83, 3000, {.minSpeed = 70, .earlyExitRange = 4}); // motion chain
+	chassis.moveToPose(-37.7, -14, 83, 2000, {.minSpeed = 70, .earlyExitRange = 4}); // motion chain
 	delay(500);
 	clawTarget = 0;
 	liftTarget = 0;
-	chassis.moveToPose(-29.1, -19.7, 137, 4000);
-	delay(1800);
+	chassis.moveToPose(-29.1, -19.7, 137, 1500);
+	chassis.waitUntilDone();
+	chassis.tank(-20, -20);
+	delay(200);
+	chassis.tank(0, 0);
+	delay(500);
 	intake_piston_back.set_value(true);
-	delay(1000);
+	delay(1500);
 	intake_piston_back.set_value(false);
 	claw_piston.set_value(false);
-	intake.move(0);
 
 	// stack up
-	chassis.turnToPoint(-40, -23.5, 2000, {.forwards = false});
+	chassis.turnToPoint(-40, -23.5, 1000, {.forwards = false});
 	liftTarget = 1900;
 	clawTarget = 9000;
-	while(chassis.isInMotion() || std::abs(liftError) > 10) {
-		delay(2);
-	}
-	chassis.moveToPose(-40, -23.5, 90, 3000, {.forwards = false});
-	chassis.waitUntilDone();
+	// chassis.waitUntilDone();
+	// while (std::abs(liftError) > 10) {
+	// 	delay(10);
+	// }
+	// chassis.moveToPose(-40, -23.5, 90, 3000, {.forwards = false});
+	// chassis.waitUntilDone();
 }
 
 Controller master(E_CONTROLLER_MASTER);
