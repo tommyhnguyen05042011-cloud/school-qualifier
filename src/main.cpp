@@ -95,7 +95,7 @@ void autonomous() {
 	chassis.tank(50, 50);
 	delay(100);
 	chassis.tank(0, 0);
-	delay(300);
+	delay(200);
 	intake_piston_back.set_value(true);
 	delay(1000);
 	claw_piston.set_value(false);
