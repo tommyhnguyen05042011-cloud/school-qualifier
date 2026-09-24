@@ -106,11 +106,9 @@ void autonomous() {
 	liftTarget = 1900;
 	clawTarget = 9500;
 	delay(200);
-	chassis.moveToPose(-45, -22, 90, 3000, {.forwards = false});
+	chassis.moveToPose(-45, -22, 90, 2000, {.forwards = false});
 	clawTarget = 9000;
-	while (std::abs(clawError) > 10) {
-		delay(2);
-	}
+	chassis.waitUntilDone();
 	claw_piston.set_value(true);
 }
 
