@@ -61,6 +61,10 @@ void autonomous() {
 	delay(400);
 	chassis.tank(60, 60);
 	delay(530);
+	chassis.tank(0, 0);
+	delay(200);
+	chassis.tank(-30, -30);
+	delay(200);
 
 	// alliance goal 1
 	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
