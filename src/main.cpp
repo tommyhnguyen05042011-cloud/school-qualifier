@@ -89,15 +89,15 @@ void autonomous() {
 	chassis.moveToPose(-29.1, -19.7, 137, 1500);
 	chassis.waitUntilDone();
 	intake_piston_back.set_value(true);
-	delay(1200);
+	delay(1100);
 	claw_piston.set_value(false);
-	intake_piston_back.set_value(false);
 	delay(200);
 
 	// stack up
 	liftTarget = 1900;
 	clawTarget = 9500;
 	delay(200);
+	intake_piston_back.set_value(false);
 	chassis.moveToPose(-46, -22, 90, 2000, {.forwards = false});
 	clawTarget = 9000;
 	chassis.waitUntilDone();
@@ -120,11 +120,11 @@ void autonomous() {
 	intake_piston_back.set_value(false);
 	delay(300);
 
-	chassis.turnToPoint(-47, -30, 1000, {.forwards = false});
+	chassis.turnToPoint(-45, -28, 1000, {.forwards = false});
 	liftTarget = 4500;
 	clawTarget = 9000;
 	chassis.waitUntilDone();
-	chassis.moveToPose(-47, -30, 180, 2000, {.forwards = false});
+	chassis.moveToPose(-45, -28, 180, 2000, {.forwards = false});
 	chassis.waitUntilDone();
 	claw_piston.set_value(true);
 	delay(500);
