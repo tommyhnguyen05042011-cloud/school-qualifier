@@ -110,6 +110,7 @@ void autonomous() {
 	clawTarget = 9000;
 	chassis.waitUntilDone();
 	chassis.tank(-50, -50);
+	delay(200);
 	claw_piston.set_value(true);
 	delay(500);
 	chassis.cancelAllMotions();
