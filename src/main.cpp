@@ -125,7 +125,11 @@ void autonomous() {
 	chassis.tank(-50, -50);
 	delay(200);
 	claw_piston.set_value(true);
-	delay(500);
+	delay(800);
+
+	// midfield
+	chassis.moveToPoint(-41.9, -36, 1500, {.minSpeed = 70, .earlyExitRange = 4});
+	chassis.moveToPose(-5.5, -8.6, 45, 2000);
 }
 
 Controller master(E_CONTROLLER_MASTER);
