@@ -118,9 +118,9 @@ void autonomous() {
 
 	liftTarget = 4500;
 	clawTarget = 9000;
-	chassis.turnToPoint(-46.5, -26, 1500, {.forwards = false});
+	chassis.turnToPoint(-47, -26, 1500, {.forwards = false});
 	chassis.waitUntilDone();
-	chassis.moveToPose(-46.5, -26, 180, 2000, {.forwards = false});
+	chassis.moveToPose(-47, -26, 180, 2000, {.forwards = false});
 	chassis.waitUntilDone();
 	chassis.tank(-50, -50);
 	delay(200);
@@ -129,7 +129,9 @@ void autonomous() {
 
 	// midfield
 	chassis.moveToPoint(-41.9, -36, 1500, {.minSpeed = 70, .earlyExitRange = 4});
-	chassis.moveToPose(-5.5, -8.6, 45, 2000);
+	delay(500);
+	liftTarget = 0;
+	chassis.moveToPose(-3.5, -5.6, 45, 2000);
 }
 
 Controller master(E_CONTROLLER_MASTER);
