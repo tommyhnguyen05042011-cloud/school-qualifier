@@ -54,7 +54,7 @@ void autonomous() {
 	// toggle
 	chassis.tank(-60, -60);
 	delay(400);
-	chassis.tank(50, 50);
+	chassis.tank(35, 35);
 	delay(650);
 	chassis.tank(0, 0);
 	delay(200);
