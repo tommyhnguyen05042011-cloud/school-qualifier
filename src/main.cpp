@@ -126,7 +126,16 @@ void autonomous() {
 	delay(800);
 	claw_piston.set_value(false);
 	intake_piston_back.set_value(false);
-	
+	delay(300);
+
+	chassis.turnToPoint(-47, -30, 500);
+	liftTarget = 4500;
+	clawTarget = 9000;
+	chassis.waitUntilDone();
+	chassis.moveToPose(-47, -30, 180, 2000);
+	chassis.waitUntilDone();
+	claw_piston.set_value(true);
+	delay(500);
 }
 
 Controller master(E_CONTROLLER_MASTER);
