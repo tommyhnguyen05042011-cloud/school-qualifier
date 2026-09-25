@@ -106,14 +106,22 @@ void autonomous() {
 	liftTarget = 1900;
 	clawTarget = 9500;
 	delay(200);
-	chassis.moveToPose(-45, -22, 90, 2000, {.forwards = false});
+	chassis.moveToPose(-45, -22, 90, 1500, {.forwards = false});
 	clawTarget = 9000;
 	chassis.waitUntilDone();
+	chassis.tank(-50, -50);
 	claw_piston.set_value(true);
 	delay(500);
+	chassis.cancelAllMotions();
 
 	clawTarget = 10500;
-	chassis.moveToPoint(-7.7, -8, 3000);
+	chassis.setPose(-40.17, -23.5, 90);
+	delay(500);
+	chassis.moveToPose(-37.1, -32.9, 188, 1500, {.minSpeed = 70, .earlyExitRange = 4});
+	delay(200);
+	liftTarget = 0;
+	clawTarget = 0;
+	chassis.moveToPose(-47, -47, 225, 1500);
 }
 
 Controller master(E_CONTROLLER_MASTER);
