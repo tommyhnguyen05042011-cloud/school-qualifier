@@ -113,8 +113,7 @@ void autonomous() {
 	claw_piston.set_value(true);
 	delay(500);
 	chassis.cancelAllMotions();
-
-	clawTarget = 10500;
+	
 	chassis.setPose(-40.17, -23.5, 90);
 	delay(500);
 	chassis.moveToPose(-37.1, -32.9, 188, 1500, {.minSpeed = 70, .earlyExitRange = 4});
