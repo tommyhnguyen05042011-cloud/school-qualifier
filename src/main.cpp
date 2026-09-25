@@ -116,9 +116,9 @@ void autonomous() {
 	delay(300);
 	intake_piston_back.set_value(false);
 
-	chassis.turnToPoint(-46, -26, 1000, {.forwards = false});
 	liftTarget = 4500;
 	clawTarget = 9000;
+	chassis.turnToPoint(-46, -26, 1500, {.forwards = false});
 	chassis.waitUntilDone();
 	chassis.moveToPose(-46, -26, 180, 2000, {.forwards = false});
 	chassis.waitUntilDone();
