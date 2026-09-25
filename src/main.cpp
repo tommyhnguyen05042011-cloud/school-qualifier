@@ -89,7 +89,7 @@ void autonomous() {
 	chassis.moveToPose(-29.1, -19.7, 137, 1800);
 	chassis.waitUntilDone();
 	intake_piston_back.set_value(true);
-	delay(1100);
+	delay(1500);
 	claw_piston.set_value(false);
 	delay(200);
 
