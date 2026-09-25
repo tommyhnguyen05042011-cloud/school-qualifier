@@ -118,9 +118,9 @@ void autonomous() {
 
 	liftTarget = 4500;
 	clawTarget = 9000;
-	chassis.turnToPoint(-46, -26, 1500, {.forwards = false});
+	chassis.turnToPoint(-46.5, -26, 1500, {.forwards = false});
 	chassis.waitUntilDone();
-	chassis.moveToPose(-46, -26, 180, 2000, {.forwards = false});
+	chassis.moveToPose(-46.5, -26, 180, 2000, {.forwards = false});
 	chassis.waitUntilDone();
 	chassis.tank(-50, -50);
 	delay(200);
