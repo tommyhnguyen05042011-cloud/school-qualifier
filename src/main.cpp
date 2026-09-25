@@ -55,7 +55,7 @@ void autonomous() {
 	chassis.tank(-60, -60);
 	delay(400);
 	chassis.tank(35, 35);
-	delay(650);
+	delay(750);
 	chassis.tank(0, 0);
 	delay(200);
 	chassis.tank(-30, -30);
@@ -123,9 +123,9 @@ void autonomous() {
 	chassis.moveToPose(-47, -47, 225, 1500);
 	chassis.waitUntilDone();
 	intake_piston_back.set_value(true);
-	delay(300);
+	delay(500);
 	intake_piston_back.set_value(false);
-	delay(300);
+	delay(500);
 	intake_piston_back.set_value(true);
 	delay(1000);
 	claw_piston.set_value(false);
