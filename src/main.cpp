@@ -62,17 +62,13 @@ void autonomous() {
 	delay(200);
 
 	// alliance goal 1
-	chassis.moveToPose(-44.75, -20, 0, 2000, {.forwards = false});
+	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
 	liftTarget = 500;
 	clawTarget = 9000;
-	while (chassis.isInMotion()) {
-		delay(2);
-	}
+	chassis.waitUntilDone();
 	chassis.tank(-30, -30); // push into goal
 	liftTarget = -1100;
-	while (std::abs(liftError) > 10) {
-		delay(2);
-	}
+	delay(1000);
 	chassis.tank(0, 0);
 	delay(500);
 	claw_piston.set_value(true);
