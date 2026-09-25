@@ -58,11 +58,11 @@ void autonomous() {
 	delay(750);
 	chassis.tank(0, 0);
 	delay(200);
-	chassis.tank(-30, -30);
+	chassis.tank(-40, -40);
 	delay(200);
 
 	// alliance goal 1
-	chassis.moveToPose(-45, -20, 0, 2000, {.forwards = false});
+	chassis.moveToPose(-44.75, -20, 0, 2000, {.forwards = false});
 	liftTarget = 500;
 	clawTarget = 9000;
 	while (chassis.isInMotion()) {
@@ -86,7 +86,7 @@ void autonomous() {
 	delay(500);
 	clawTarget = 0;
 	liftTarget = 0;
-	chassis.moveToPose(-29.1, -19.7, 137, 1500);
+	chassis.moveToPose(-29.1, -19.7, 137, 1800);
 	chassis.waitUntilDone();
 	intake_piston_back.set_value(true);
 	delay(1100);
@@ -112,7 +112,7 @@ void autonomous() {
 	delay(200);
 	liftTarget = 0;
 	clawTarget = 0;
-	chassis.moveToPose(-47, -46.5, 225, 1500);
+	chassis.moveToPose(-47, -46.5, 225, 1800);
 	chassis.waitUntilDone();
 	intake_piston_back.set_value(true);
 	delay(1000);
